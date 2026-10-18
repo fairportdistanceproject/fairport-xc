@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fairport Cross Country</title>
+<meta name="description" content="Fairport Cross Country · Fairport Distance Project: schedule, results and team news.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏃</text></svg>">
+<style>
+:root{--bg:#f5f7fb;--surface:#fff;--text:#12182b;--muted:#5d6579;--blue:#0a2a66;--red:#c8102e;--accent:#c8102e;--line:#dfe4ee;--win:#1f7a4d;--hero:#0a2a66;--hero-t:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#0b1020;--surface:#141b30;--text:#eef1f8;--muted:#a0a9bf;--accent:#ff4a63;--line:#26304b;--win:#4cc38a;--hero:#071a42}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#0b1020;--surface:#141b30;--text:#eef1f8;--muted:#a0a9bf;--accent:#ff4a63;--line:#26304b;--win:#4cc38a;--hero:#071a42}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 60px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;line-height:1.55}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--hero);z-index:10}
+.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--hero);color:var(--hero-t);border-bottom:3px solid var(--red)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:58px;gap:10px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:.92rem;letter-spacing:.04em}
+.brand img{height:38px;width:auto;border-radius:4px}
+.mark{width:38px;height:38px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-size:.78rem;font-weight:800;border:2px solid #fff}
+nav div.l{display:flex;gap:16px;font-size:.88rem}
+nav a{color:inherit;text-decoration:none;opacity:.85}nav a:hover{opacity:1}
+.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 4px}.rowb{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border:0;border-bottom:3px solid var(--red);border-radius:10px;background:var(--blue);color:#fff;font:inherit;text-align:left;cursor:pointer;box-shadow:0 2px 6px rgba(10,42,102,.25);transition:transform .1s,background .1s}.rowb small{opacity:.8;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em}.rowb strong{font-size:1rem}.rowb em{font-style:normal;font-size:.78rem;color:#ffb3be;margin-top:4px}.rowb:hover{background:var(--red);transform:translateY(-1px)}.rowb:hover em{color:#fff}
+.back{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:0;margin-bottom:14px}
+#racepage{padding-top:34px;min-height:60vh}
+textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:.9rem}
+.foot{background:none;border:1px solid rgba(255,255,255,.3);color:inherit;opacity:.6;font:inherit;font-size:.72rem;padding:3px 10px;border-radius:99px;cursor:pointer}.foot:hover{opacity:1}
+.team{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.ath{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--red);border-radius:12px;padding:18px;text-align:center}
+.av{width:56px;height:56px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:700;margin:0 auto 10px;border:2px solid var(--red)}
+.ath small{color:var(--muted)}
+#gate{max-width:760px}#gerr{color:var(--accent);font-size:.82rem;margin-top:8px}
+.hero{background:var(--hero);color:var(--hero-t);padding:60px 0 76px;background-image:repeating-linear-gradient(115deg,transparent 0 38px,rgba(200,16,46,.22) 38px 40px)}
+.eyebrow{color:#ff8fa0;font-weight:700;letter-spacing:.18em;text-transform:uppercase;font-size:.78rem}
+h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.4rem,7vw,4.6rem);line-height:1;margin:.3em 0 .25em}
+.hero p{max-width:520px;opacity:.85;margin:0 0 26px}
+.btn{display:inline-block;background:var(--red);color:#fff;padding:11px 22px;border-radius:8px;text-decoration:none;font-weight:600;border:0;cursor:pointer;font:inherit;font-weight:600}
+.btn.s{padding:7px 14px;font-size:.85rem}.btn.g{background:var(--line);color:var(--text)}
+.next{margin-top:34px;display:inline-flex;gap:18px;align-items:center;flex-wrap:wrap;border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:14px 20px}
+.next small{display:block;opacity:.7;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em}
+.cd{display:flex;gap:14px;font-variant-numeric:tabular-nums}
+.cd div{text-align:center}.cd strong{font-size:1.6rem;display:block;line-height:1}
+.stats{display:grid;grid-template-columns:1fr;gap:12px;max-width:340px;margin:-36px auto 0;position:relative}
+.stat{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--red);border-radius:12px;padding:16px;text-align:center}
+.stat strong{font-size:1.8rem;color:var(--accent);display:block;line-height:1.1;font-family:Georgia,serif}
+.stat span{color:var(--muted);font-size:.8rem}
+section{padding:54px 0 0}
+h2{font-family:Georgia,serif;font-size:1.9rem;margin:0 0 6px;color:var(--text)}
+h2::after{content:"";display:block;width:44px;height:4px;background:var(--red);margin-top:8px;border-radius:2px}
+.sub{color:var(--muted);margin:10px 0 22px}
+.tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.tabs button{border:1px solid var(--line);background:var(--surface);color:var(--text);padding:7px 16px;border-radius:99px;cursor:pointer;font:inherit;font-size:.88rem}
+.tabs button.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.tbl{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:12px}
+table{width:100%;border-collapse:collapse;min-width:520px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--line);font-size:.92rem}
+th{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.tag{font-size:.72rem;font-weight:700;padding:3px 9px;border-radius:99px;background:var(--line);color:var(--muted)}
+.tag.up{background:var(--red);color:#fff}
+.res{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px}
+.card{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--blue);border-radius:12px;padding:18px}
+.card h3{margin:0;font-size:1.05rem}.card .d{color:var(--muted);font-size:.82rem;margin-bottom:10px}
+.row{display:flex;justify-content:space-between;gap:10px;padding:6px 0;border-top:1px solid var(--line);font-size:.9rem}
+.w{color:var(--win);font-weight:700}
+.note{font-size:.78rem;color:var(--muted);margin-top:14px}
+#admin{display:none}
+.panel{background:var(--surface);border:2px dashed var(--red);border-radius:14px;padding:22px}
+.panel h3{margin:18px 0 8px;font-size:1rem}.panel h3:first-child{margin-top:0}
+.form{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;align-items:end}
+.form label{font-size:.75rem;color:var(--muted);display:block}
+input,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:.9rem}
+.list{margin-top:10px;font-size:.88rem}
+.list div{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:7px 0;border-top:1px solid var(--line)}
+.x{background:none;border:0;color:var(--accent);cursor:pointer;font:inherit;font-size:.85rem}
+#msg{font-size:.82rem;color:var(--muted);margin-top:10px}
+footer{margin-top:64px;background:var(--hero);color:var(--hero-t);padding:30px 0;font-size:.88rem;border-top:4px solid var(--red)}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
+footer span{opacity:.7}
+@media(max-width:640px){nav div.l{gap:10px;font-size:.8rem}.brand span{display:none}}
+</style>
+</head>
+<body>
+<nav><div class="wrap"><div class="brand"><span id="logo"><span class="mark">FDP</span></span><span>Fairport Distance Project</span></div>
+<div class="l"><a href="#schedule">Schedule</a><a href="#results">Results</a><a href="#team">Team</a></div></div></nav>
+
+<header class="hero" id="herov"><div class="wrap">
+<div class="eyebrow">2026 Season · Fairport Distance Project</div>
+<h1>Run together.<br>Finish stronger.</h1>
+<p>Fairport Cross Country: miles, mud and teammates. Follow every meet, result and personal record all season long.</p>
+<a class="btn" href="#schedule">View schedule</a>
+<div class="next"><div><small>Next meet</small><strong id="nm">–</strong></div>
+<div class="cd"><div><strong id="d">0</strong><small>days</small></div><div><strong id="h">0</strong><small>hrs</small></div><div><strong id="m">0</strong><small>min</small></div></div></div>
+</div></header>
+
+<main class="wrap" id="mainv">
+<div class="stats">
+<div class="stat"><strong id="athCount">0</strong><span>Athletes</span></div>
+</div>
+
+<section id="schedule">
+<h2>Schedule</h2><p class="sub">Meets, invitationals and championships.</p>
+<div class="tabs" id="tabs"><button class="on" data-f="all">All</button><button data-f="up">Upcoming</button><button data-f="done">Completed</button></div>
+<div class="tbl"><table><thead><tr><th>Date</th><th>Meet</th><th>Location</th><th>Status</th></tr></thead><tbody id="sched"></tbody></table></div>
+</section>
+
+<section id="results">
+<h2>Results</h2><p class="sub">Recent team results. Tap Varsity or JV under a meet to see every runner's finish.</p>
+<div class="res" id="resbox"></div>
+<p class="note">Sample data for preview until real results are added in Admin.</p>
+</section>
+
+<section id="team">
+<h2>Team spotlight</h2><p class="sub">Athletes leading the way this season.</p>
+<div class="team" id="teambox"></div>
+</section>
+
+<section id="admin">
+<h2>Admin</h2><p class="sub">Changes are saved to the site's GitHub repository and go live in about a minute.</p>
+<div id="gate" style="display:none"><p class="note" style="margin:0 0 10px">Sign in with a GitHub access token that can edit this repository (see README.md for how to make one).</p><div class="form"><div><label>Repository (owner/name)</label><input id="repo" placeholder="yourname/fairport-xc"></div><div><label>Access token</label><input type="password" id="pw" autocomplete="off"></div><div><button class="btn s" id="unlock">Sign in</button></div></div><div id="gerr"></div></div>
+<div class="panel" id="panel" style="display:none">
+<div style="text-align:right"><button class="btn s g" id="closeAdmin">Close admin</button></div>
+<h3>Team logo</h3>
+<div class="form"><div><label>Upload Fairport Distance Project logo (PNG, SVG, JPG)</label><input type="file" id="logoFile" accept="image/*"></div></div>
+<h3>Team members</h3>
+<div class="form"><div><label>Name</label><input id="tn"></div><div><label>Grade</label><input id="tg" placeholder="Senior"></div><div><label>5K PR</label><input id="tp" placeholder="16:42"></div><div><button class="btn s" id="addTeam">Add person</button></div></div>
+<div class="list" id="tList"></div>
+<h3>Add a meet</h3>
+<div class="form"><div><label>Date</label><input type="date" id="sd"></div><div><label>Meet</label><input id="sm"></div><div><label>Location</label><input id="sl"></div><div><button class="btn s" id="addMeet">Add meet</button></div></div>
+<div class="list" id="aList"></div>
+<h3>Add a result</h3>
+<div class="form"><div><label>Meet</label><input id="rm"></div><div><label>Date and placement</label><input id="rd" placeholder="Oct 10 · Team: 1st of 14"></div><div><label>Varsity Boys result</label><input id="rb" placeholder="1st · 38 pts"></div><div><label>JV Boys result</label><input id="rj" placeholder="2nd · 49 pts"></div><div><label>Top finisher</label><input id="rt" placeholder="A. Rivera · 16:42"></div><div><button class="btn s" id="addRes">Add result</button></div></div>
+<div class="list" id="rList"></div>
+<h3>Individual race results</h3>
+<div class="form"><div><label>Meet</label><select id="im"></select></div><div><label>Race</label><select id="ir"><option value="v">Varsity Boys</option><option value="j">JV Boys</option></select></div></div>
+<div style="margin-top:10px"><label style="font-size:.75rem;color:var(--muted);display:block">One athlete per line: place, name, grade, time</label><textarea id="il" rows="6" placeholder="1, Alex Rivera, Sr, 16:42"></textarea></div>
+<div style="margin-top:10px"><button class="btn s" id="saveInd">Save race results</button></div>
+<div id="msg"></div>
+</div>
+</section>
+</main>
+
+<div id="racepage" class="wrap" style="display:none">
+<button class="back" id="backBtn">‹ Back to results</button>
+<h2 id="rpTitle"></h2><p class="sub" id="rpSub"></p>
+<div class="tabs" id="rpTabs"><button data-r="v">Varsity Boys</button><button data-r="j">JV Boys</button></div>
+<div class="tbl"><table><thead><tr><th>Place</th><th>Athlete</th><th>Grade</th><th>Time</th></tr></thead><tbody id="rpBody"></tbody></table></div>
+<p class="note">Sample data for preview until real results are added in Admin.</p>
+</div>
+
+<footer><div class="wrap"><div><strong>Fairport Cross Country</strong><br><span>Fairport Distance Project · Fairport, New York</span></div><span>Preview design · Sample content</span><button class="foot" id="adminLink">Admin</button></div></footer>
+
+<script>
+var SV=[["1","Alex Rivera","Sr","16:42"],["2","Jordan Okafor","So","17:11"],["3","Sam Brooks","Sr","17:38"],["4","Tyler Lane","Jr","17:54"],["5","Dylan Park","Jr","18:02"],["6","Evan Moore","So","18:20"],["7","Nate Silva","Fr","18:41"]],SJ=[["1","Ben Carter","So","18:30"],["2","Luke Nguyen","Fr","18:52"],["3","Owen Hayes","Fr","19:07"],["4","Max Rossi","So","19:25"],["5","Eli Grant","Fr","19:48"]];
+var S={schedule:[
+{date:"2026-09-12",meet:"Season Opener Time Trial",loc:"Home · Fairport"},
+{date:"2026-09-26",meet:"Dual Meet vs. Webster",loc:"Home · Fairport"},
+{date:"2026-10-03",meet:"Monroe County Meet",loc:"Churchville Park"},
+{date:"2026-10-10",meet:"Fairport Invitational",loc:"Home · Fairport"},
+{date:"2026-10-24",meet:"Section V Class A Qualifier",loc:"Letchworth State Park"},
+{date:"2026-11-07",meet:"Section V Championships",loc:"Sunnyside Park"},
+{date:"2026-11-14",meet:"NYSPHSAA State Championships",loc:"Sunken Meadow, Long Island"}],
+results:[
+{meet:"Fairport Invitational",d:"Oct 10 · Team: 1st of 14",b:"1st · 38 pts",j:"2nd · 49 pts",t:"A. Rivera · 16:42",vi:SV,ji:SJ},
+{meet:"Monroe County Meet",d:"Oct 3 · Team: 3rd of 20",b:"3rd · 97 pts",j:"4th · 112 pts",t:"D. Park · 16:58",vi:SV,ji:SJ},
+{meet:"Dual Meet vs. Webster",d:"Sep 26 · Home",b:"W 21–36",j:"W 24–33",t:"J. Okafor · 17:11",vi:SV,ji:SJ}],team:[{"name": "Alex Rivera", "grade": "Senior", "pr": "16:42"}, {"name": "Jordan Okafor", "grade": "Sophomore", "pr": "17:11"}, {"name": "Sam Brooks", "grade": "Senior", "pr": "17:38"}, {"name": "Tyler Lane", "grade": "Junior", "pr": "17:54"}],logo:null};
+var filter="all",canEdit=false,db=null;
+function esc(s){var e=document.createElement("div");e.textContent=s==null?"":String(s);return e.innerHTML}
+function fmt(s){return new Date(s+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}
+function isUp(m){return new Date(m.date+"T23:59:00")>=new Date()}
+function sorted(){return S.schedule.slice().sort(function(a,b){return a.date<b.date?-1:1})}
+function ini(n){return String(n).trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join("").toUpperCase()}
+function render(){
+var rows="";sorted().forEach(function(m){var up=isUp(m);if(filter==="up"&&!up)return;if(filter==="done"&&up)return;
+rows+="<tr><td><strong>"+fmt(m.date)+"</strong></td><td>"+esc(m.meet)+"</td><td>"+esc(m.loc)+"</td><td><span class=\"tag "+(up?"up":"")+"\">"+(up?"Upcoming":"Final")+"</span></td></tr>"});
+document.getElementById("sched").innerHTML=rows||"<tr><td colspan=4>No meets to show.</td></tr>";
+document.getElementById("resbox").innerHTML=S.results.map(function(r,i){return "<div class=\"card\"><h3>"+esc(r.meet)+"</h3><div class=\"d\">"+esc(r.d)+"</div><div class=\"btns\"><button class=\"rowb\" data-i=\""+i+"\" data-r=\"v\"><small>Varsity Boys</small><strong>"+esc(r.b||"–")+"</strong><em>View results ›</em></button><button class=\"rowb\" data-i=\""+i+"\" data-r=\"j\"><small>JV Boys</small><strong>"+esc(r.j||"–")+"</strong><em>View results ›</em></button></div><div class=\"row\"><span>Top finisher</span><span>"+esc(r.t)+"</span></div></div>"}).join("");
+document.getElementById("teambox").innerHTML=(S.team||[]).map(function(p){var meta=[p.grade,p.pr?"5K PR "+p.pr:""].filter(Boolean).join(" · ");return "<div class=\"ath\"><div class=\"av\">"+esc(ini(p.name||"?"))+"</div><strong>"+esc(p.name)+"</strong><br><small>"+esc(meta)+"</small></div>"}).join("")||"<p class=\"sub\">No team members yet.</p>";
+document.getElementById("athCount").textContent=(S.team||[]).length;
+var lg=document.getElementById("logo");
+if(S.logo){lg.innerHTML="";var i=new Image();i.alt="Fairport Distance Project logo";i.src=S._lp||S.logo;lg.appendChild(i)}
+var nx=sorted().filter(isUp)[0];document.getElementById("nm").textContent=nx?nx.meet:"Season complete";
+if(canEdit){
+document.getElementById("tList").innerHTML=(S.team||[]).map(function(p,i){return "<div><span>"+esc(p.name)+(p.grade?" · "+esc(p.grade):"")+"</span><button class=\"x\" data-k=\"t\" data-i=\""+i+"\">Remove</button></div>"}).join("");
+document.getElementById("aList").innerHTML=sorted().map(function(m){return "<div><span>"+fmt(m.date)+" · "+esc(m.meet)+"</span><button class=\"x\" data-k=\"s\" data-i=\""+S.schedule.indexOf(m)+"\">Remove</button></div>"}).join("");
+document.getElementById("rList").innerHTML=S.results.map(function(r,i){return "<div><span>"+esc(r.meet)+"</span><button class=\"x\" data-k=\"r\" data-i=\""+i+"\">Remove</button></div>"}).join("")}}
+function tick(){var nx=sorted().filter(isUp)[0],t=nx?new Date(nx.date+"T09:00:00")-new Date():0;if(t<0)t=0;
+document.getElementById("d").textContent=Math.floor(t/864e5);document.getElementById("h").textContent=Math.floor(t%864e5/36e5);document.getElementById("m").textContent=Math.floor(t%36e5/6e4)}
+function say(t){document.getElementById("msg").textContent=t}
+var GH=null,q=Promise.resolve();
+function gh(tok,method,path,body){return fetch("https://api.github.com"+path,{method:method,headers:{"Authorization":"Bearer "+tok,"Accept":"application/vnd.github+json"},body:body?JSON.stringify(body):undefined}).then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok)throw new Error(j.message||("GitHub error "+r.status));return j})})}
+function b64(t){return btoa(unescape(encodeURIComponent(t)))}
+function ghPut(path,content,isB64,msg){var u="/repos/"+GH.repo+"/contents/"+path;
+return gh(GH.tok,"GET",u).catch(function(){return null}).then(function(cur){var body={message:msg,content:isB64?content:b64(content)};if(cur&&cur.sha)body.sha=cur.sha;return gh(GH.tok,"PUT",u,body)})}
+function save(){if(!GH){say("Sign in first.");return}say("Saving…");
+q=q.then(function(){var txt=JSON.stringify({schedule:S.schedule,results:S.results,team:S.team,logo:S.logo},null,1);return ghPut("data.json",txt,false,"Update site data")}).then(function(){say("Saved. The live site updates in about a minute.")}).catch(function(e){say("Could not save: "+e.message)})}
+var curI=0;
+function showRace(i,k){curI=i;drawRace(k);document.getElementById("herov").style.display="none";document.getElementById("mainv").style.display="none";document.getElementById("racepage").style.display="block";window.scrollTo(0,0)}
+function drawRace(k){var r=S.results[curI];if(!r)return;var rows=(k==="v"?r.vi:r.ji)||[];
+document.getElementById("rpTitle").textContent=r.meet;
+document.getElementById("rpSub").textContent=r.d+" · Varsity "+(r.b||"–")+" · JV "+(r.j||"–");
+document.querySelectorAll("#rpTabs button").forEach(function(b){b.classList.toggle("on",b.dataset.r===k)});
+document.getElementById("rpBody").innerHTML=rows.length?rows.map(function(x){return "<tr><td><strong>"+esc(x[0])+"</strong></td><td>"+esc(x[1])+"</td><td>"+esc(x[2])+"</td><td>"+esc(x[3])+"</td></tr>"}).join(""):"<tr><td colspan=4>Individual results have not been posted yet.</td></tr>";
+}
+function hideRace(){document.getElementById("herov").style.display="";document.getElementById("mainv").style.display="";document.getElementById("racepage").style.display="none"}
+document.getElementById("resbox").addEventListener("click",function(e){var b=e.target.closest(".rowb");if(!b)return;showRace(+b.dataset.i,b.dataset.r)});
+document.getElementById("rpTabs").addEventListener("click",function(e){var b=e.target.closest("button");if(b)drawRace(b.dataset.r)});
+document.getElementById("backBtn").onclick=function(){hideRace();var el=document.getElementById("results");if(el)el.scrollIntoView()};
+document.querySelectorAll("nav a").forEach(function(a){a.addEventListener("click",hideRace)});
+function fillIm(){var im=document.getElementById("im"),cur=im.value;im.innerHTML=S.results.map(function(r,i){return "<option value=\""+i+"\">"+esc(r.meet)+"</option>"}).join("");if(cur&&+cur<S.results.length)im.value=cur}
+function loadInd(){var r=S.results[+document.getElementById("im").value];if(!r)return;document.getElementById("il").value=((document.getElementById("ir").value==="v"?r.vi:r.ji)||[]).map(function(x){return x.join(", ")}).join("\n")}
+var _r=render;render=function(){_r();if(canEdit)fillIm()};
+document.getElementById("im").onchange=loadInd;document.getElementById("ir").onchange=loadInd;
+document.getElementById("saveInd").onclick=function(){var r=S.results[+document.getElementById("im").value];if(!r){say("Add a result for this meet first.");return}
+var rows=document.getElementById("il").value.split("\n").map(function(l){return l.trim()}).filter(Boolean).map(function(l){var p=l.split(",").map(function(x){return x.trim()});return [p[0]||"",p[1]||"",p[2]||"",p[3]||""]});
+if(document.getElementById("ir").value==="v")r.vi=rows;else r.ji=rows;render();save("results")};
+document.getElementById("tabs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;this.querySelectorAll("button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");filter=b.dataset.f;render()});
+document.getElementById("addTeam").onclick=function(){var n=document.getElementById("tn").value.trim();if(!n){say("Add a name.");return}
+S.team=S.team||[];S.team.push({name:n,grade:document.getElementById("tg").value.trim(),pr:document.getElementById("tp").value.trim()});document.getElementById("tn").value=document.getElementById("tg").value=document.getElementById("tp").value="";render();save()};
+document.getElementById("addMeet").onclick=function(){var d=sd.value,m=sm.value.trim();if(!d||!m){say("Add a date and meet name.");return}
+S.schedule.push({date:d,meet:m,loc:sl.value.trim()});sm.value=sl.value="";render();save("schedule")};
+document.getElementById("addRes").onclick=function(){if(!rm.value.trim()){say("Add a meet name.");return}
+S.results.unshift({meet:rm.value.trim(),d:rd.value.trim(),b:rb.value.trim(),j:rj.value.trim(),t:rt.value.trim(),vi:[],ji:[]});rm.value=rd.value=rb.value=rj.value=rt.value="";render();save("results")};
+document.getElementById("admin").addEventListener("click",function(e){var b=e.target.closest(".x");if(!b)return;
+if(b.dataset.k==="t"){S.team.splice(+b.dataset.i,1);render();save()}else if(b.dataset.k==="s"){S.schedule.splice(+b.dataset.i,1);render();save("schedule")}else{S.results.splice(+b.dataset.i,1);render();save("results")}});
+document.getElementById("logoFile").onchange=function(){var f=this.files[0];if(!f)return;if(!GH){say("Sign in first.");return}
+var ext=(f.name.split(".").pop()||"png").toLowerCase().replace(/[^a-z0-9]/g,"");say("Uploading logo…");
+var fr=new FileReader();fr.onload=function(){var data=fr.result;S._lp=data;
+q=q.then(function(){return ghPut("logo."+ext,data.split(",")[1],true,"Update logo")}).then(function(){S.logo="logo."+ext+"?v="+Date.now();render();save()}).catch(function(e){say("Upload failed: "+e.message)})};fr.readAsDataURL(f)};
+render();tick();setInterval(tick,30000);
+fetch("data.json?v="+Date.now()).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d)return;if(Array.isArray(d.schedule))S.schedule=d.schedule;if(Array.isArray(d.results))S.results=d.results;if(Array.isArray(d.team))S.team=d.team;S.logo=d.logo||null;render();tick()}).catch(function(){});
+(function(){var h=location.hostname,p=location.pathname.split("/")[1],g="";
+if(/\.github\.io$/.test(h)){g=h.split(".")[0]+"/"+(p||h)}
+try{g=localStorage.getItem("fxc_repo")||g}catch(e){}
+document.getElementById("repo").value=g})();
+document.getElementById("adminLink").addEventListener("click",function(){hideRace();var sec=document.getElementById("admin");sec.style.display="block";
+document.getElementById("panel").style.display="none";document.getElementById("gate").style.display="block";document.getElementById("pw").value="";document.getElementById("gerr").textContent="";canEdit=false;GH=null;
+sec.scrollIntoView();document.getElementById("pw").focus()});
+document.getElementById("unlock").onclick=function(){var ge=document.getElementById("gerr"),repo=document.getElementById("repo").value.trim(),tok=document.getElementById("pw").value.trim();
+if(!/^[\w.-]+\/[\w.-]+$/.test(repo)||!tok){ge.textContent="Enter the repository as owner/name and your access token.";return}
+ge.textContent="Checking…";
+gh(tok,"GET","/repos/"+repo).then(function(r){if(!(r.permissions&&r.permissions.push)){ge.textContent="That token cannot edit this repository.";return}
+GH={repo:repo,tok:tok};try{localStorage.setItem("fxc_repo",repo)}catch(e){}
+canEdit=true;document.getElementById("pw").value="";document.getElementById("gate").style.display="none";document.getElementById("panel").style.display="block";render();loadInd()}).catch(function(e){ge.textContent="Sign-in failed: "+e.message})};
+document.getElementById("pw").addEventListener("keydown",function(e){if(e.key==="Enter")document.getElementById("unlock").click()});
+document.getElementById("closeAdmin").onclick=function(){canEdit=false;GH=null;document.getElementById("admin").style.display="none";window.scrollTo(0,0)};
+</script>
+</body>
+</html>
