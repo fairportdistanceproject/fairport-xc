@@ -287,22 +287,6 @@
    ]
   }
  ],
- "team": [
-  {
-   "name": "Jordan Okafor",
-   "grade": "Sophomore",
-   "pr": "17:11"
-  },
-  {
-   "name": "Sam Brooks",
-   "grade": "Senior",
-   "pr": "17:38"
-  },
-  {
-   "name": "Tyler Lane",
-   "grade": "Junior",
-   "pr": "17:54"
-  }
- ],
+ "team": [],
  "logo": "logo.jpg?v=1792288046582"
 }
