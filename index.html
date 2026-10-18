@@ -43,7 +43,7 @@ h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2.4rem,7vw,4.6rem
 .next small{display:block;opacity:.7;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em}
 .cd{display:flex;gap:14px;font-variant-numeric:tabular-nums}
 .cd div{text-align:center}.cd strong{font-size:1.6rem;display:block;line-height:1}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:-36px;position:relative}
+.stats{display:grid;grid-template-columns:1fr;gap:12px;max-width:340px;margin:-36px auto 0;position:relative}
 .stat{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--red);border-radius:12px;padding:16px;text-align:center}
 .stat strong{font-size:1.8rem;color:var(--accent);display:block;line-height:1.1;font-family:Georgia,serif}
 .stat span{color:var(--muted);font-size:.8rem}
@@ -80,7 +80,7 @@ input,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-rad
 footer{margin-top:64px;background:var(--hero);color:var(--hero-t);padding:30px 0;font-size:.88rem;border-top:4px solid var(--red)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 footer span{opacity:.7}
-@media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}nav div.l{gap:10px;font-size:.8rem}.brand span{display:none}}
+@media(max-width:640px){nav div.l{gap:10px;font-size:.8rem}.brand span{display:none}}
 </style>
 </head>
 <body>
@@ -98,10 +98,7 @@ footer span{opacity:.7}
 
 <main class="wrap" id="mainv">
 <div class="stats">
-<div class="stat"><strong>5–1</strong><span>Dual meet record</span></div>
-<div class="stat"><strong>3</strong><span>Invitational podiums</span></div>
 <div class="stat"><strong>41</strong><span>Athletes</span></div>
-<div class="stat"><strong>12</strong><span>Season PRs</span></div>
 </div>
 
 <section id="schedule">
