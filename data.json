@@ -1,6 +1,12 @@
 {
  "schedule": [],
  "results": [],
- "team": [],
+ "team": [
+  {
+   "name": "dadas",
+   "grade": "dsadas",
+   "pr": "sada"
+  }
+ ],
  "logo": "logo.jpg?v=1792288046582"
 }
