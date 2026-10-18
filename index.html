@@ -132,9 +132,10 @@ footer span{opacity:.7}
 <div class="form"><div><label>Date</label><input type="date" id="sd"></div><div><label>Meet</label><input id="sm"></div><div><label>Location</label><input id="sl"></div><div><button class="btn s" id="addMeet">Add meet</button></div></div>
 <div class="list" id="aList"></div>
 <h3>Add a result</h3>
-<div class="form"><div><label>Meet</label><input id="rm"></div><div><label>Date and placement</label><input id="rd" placeholder="Oct 10 · Team: 1st of 14"></div><div><label>Varsity Boys result</label><input id="rb" placeholder="1st · 38 pts"></div><div><label>JV Boys result</label><input id="rj" placeholder="2nd · 49 pts"></div><div><label>Top finisher</label><input id="rt" placeholder="A. Rivera · 16:42"></div><div><button class="btn s" id="addRes">Add result</button></div></div>
+<div class="form"><div><label>Meet</label><input id="rm"></div><div><label>Date and placement</label><input id="rd" placeholder="Oct 10 · Team: 1st of 14"></div><div><label>Varsity Boys result</label><input id="rb" placeholder="1st · 38 pts"></div><div><label>JV Boys result</label><input id="rj" placeholder="2nd · 49 pts"></div><div><label>Top finisher</label><input id="rt" placeholder="A. Rivera · 16:42"></div><div><button class="btn s" id="addRes">Add result</button> <button class="btn s g" id="cancelRes" style="display:none">Cancel</button></div></div>
 <div class="list" id="rList"></div>
 <h3>Individual race results</h3>
+<div class="note" style="margin:0 0 8px">Pick a meet and race, edit the lines below, then click Save race results. Or click Race results next to a meet above.</div>
 <div class="form"><div><label>Meet</label><select id="im"></select></div><div><label>Race</label><select id="ir"><option value="v">Varsity Boys</option><option value="j">JV Boys</option></select></div></div>
 <div style="margin-top:10px"><label style="font-size:.75rem;color:var(--muted);display:block">One athlete per line: place, name, grade, time</label><textarea id="il" rows="6" placeholder="1, Alex Rivera, Sr, 16:42"></textarea></div>
 <div style="margin-top:10px"><button class="btn s" id="saveInd">Save race results</button></div>
@@ -186,7 +187,7 @@ var nx=sorted().filter(isUp)[0];document.getElementById("nm").textContent=nx?nx.
 if(canEdit){
 document.getElementById("tList").innerHTML=(S.team||[]).map(function(p,i){return "<div><span>"+esc(p.name)+(p.grade?" · "+esc(p.grade):"")+"</span><button class=\"x\" data-k=\"t\" data-i=\""+i+"\">Remove</button></div>"}).join("");
 document.getElementById("aList").innerHTML=sorted().map(function(m){return "<div><span>"+fmt(m.date)+" · "+esc(m.meet)+"</span><button class=\"x\" data-k=\"s\" data-i=\""+S.schedule.indexOf(m)+"\">Remove</button></div>"}).join("");
-document.getElementById("rList").innerHTML=S.results.map(function(r,i){return "<div><span>"+esc(r.meet)+"</span><button class=\"x\" data-k=\"r\" data-i=\""+i+"\">Remove</button></div>"}).join("")}}
+document.getElementById("rList").innerHTML=S.results.map(function(r,i){return "<div><span>"+esc(r.meet)+"</span><span><button class=\"x\" data-k=\"re\" data-i=\""+i+"\">Edit</button> <button class=\"x\" data-k=\"ri\" data-i=\""+i+"\">Race results</button> <button class=\"x\" data-k=\"r\" data-i=\""+i+"\">Remove</button></span></div>"}).join("")}}
 function tick(){var nx=sorted().filter(isUp)[0],t=nx?new Date(nx.date+"T09:00:00")-new Date():0;if(t<0)t=0;
 document.getElementById("d").textContent=Math.floor(t/864e5);document.getElementById("h").textContent=Math.floor(t%864e5/36e5);document.getElementById("m").textContent=Math.floor(t%36e5/6e4)}
 function say(t){document.getElementById("msg").textContent=t}
@@ -218,14 +219,22 @@ document.getElementById("saveInd").onclick=function(){var r=S.results[+document.
 var rows=document.getElementById("il").value.split("\n").map(function(l){return l.trim()}).filter(Boolean).map(function(l){var p=l.split(",").map(function(x){return x.trim()});return [p[0]||"",p[1]||"",p[2]||"",p[3]||""]});
 if(document.getElementById("ir").value==="v")r.vi=rows;else r.ji=rows;render();save("results")};
 document.getElementById("tabs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;this.querySelectorAll("button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");filter=b.dataset.f;render()});
+var editIdx=-1;
+function cancelEdit(){editIdx=-1;["rm","rd","rb","rj","rt"].forEach(function(id){document.getElementById(id).value=""});document.getElementById("addRes").textContent="Add result";document.getElementById("cancelRes").style.display="none"}
+function editRes(i){var r=S.results[i];if(!r)return;editIdx=i;document.getElementById("rm").value=r.meet||"";document.getElementById("rd").value=r.d||"";document.getElementById("rb").value=r.b||"";document.getElementById("rj").value=r.j||"";document.getElementById("rt").value=r.t||"";
+document.getElementById("addRes").textContent="Save changes";document.getElementById("cancelRes").style.display="";document.getElementById("rm").scrollIntoView({block:"center"});document.getElementById("rm").focus()}
+function raceRes(i){document.getElementById("im").value=String(i);document.getElementById("ir").value="v";loadInd();document.getElementById("il").scrollIntoView({block:"center"});document.getElementById("il").focus()}
+document.getElementById("cancelRes").onclick=cancelEdit;
 document.getElementById("addTeam").onclick=function(){var n=document.getElementById("tn").value.trim();if(!n){say("Add a name.");return}
 S.team=S.team||[];S.team.push({name:n,grade:document.getElementById("tg").value.trim(),pr:document.getElementById("tp").value.trim()});document.getElementById("tn").value=document.getElementById("tg").value=document.getElementById("tp").value="";render();save()};
 document.getElementById("addMeet").onclick=function(){var d=sd.value,m=sm.value.trim();if(!d||!m){say("Add a date and meet name.");return}
 S.schedule.push({date:d,meet:m,loc:sl.value.trim()});sm.value=sl.value="";render();save("schedule")};
 document.getElementById("addRes").onclick=function(){if(!rm.value.trim()){say("Add a meet name.");return}
-S.results.unshift({meet:rm.value.trim(),d:rd.value.trim(),b:rb.value.trim(),j:rj.value.trim(),t:rt.value.trim(),vi:[],ji:[]});rm.value=rd.value=rb.value=rj.value=rt.value="";render();save("results")};
+var o={meet:rm.value.trim(),d:rd.value.trim(),b:rb.value.trim(),j:rj.value.trim(),t:rt.value.trim()};
+if(editIdx>=0&&S.results[editIdx]){var c=S.results[editIdx];c.meet=o.meet;c.d=o.d;c.b=o.b;c.j=o.j;c.t=o.t}else{o.vi=[];o.ji=[];S.results.unshift(o)}
+cancelEdit();render();save("results")};
 document.getElementById("admin").addEventListener("click",function(e){var b=e.target.closest(".x");if(!b)return;
-if(b.dataset.k==="t"){S.team.splice(+b.dataset.i,1);render();save()}else if(b.dataset.k==="s"){S.schedule.splice(+b.dataset.i,1);render();save("schedule")}else{S.results.splice(+b.dataset.i,1);render();save("results")}});
+if(b.dataset.k==="re"){editRes(+b.dataset.i)}else if(b.dataset.k==="ri"){raceRes(+b.dataset.i)}else if(b.dataset.k==="t"){S.team.splice(+b.dataset.i,1);render();save()}else if(b.dataset.k==="s"){S.schedule.splice(+b.dataset.i,1);render();save("schedule")}else{S.results.splice(+b.dataset.i,1);cancelEdit();render();save("results")}});
 document.getElementById("logoFile").onchange=function(){var f=this.files[0];if(!f)return;if(!GH){say("Sign in first.");return}
 var ext=(f.name.split(".").pop()||"png").toLowerCase().replace(/[^a-z0-9]/g,"");say("Uploading logo…");
 var fr=new FileReader();fr.onload=function(){var data=fr.result;S._lp=data;
