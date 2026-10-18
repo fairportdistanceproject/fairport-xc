@@ -299,7 +299,7 @@ var ext=(f.name.split(".").pop()||"png").toLowerCase().replace(/[^a-z0-9]/g,"");
 var fr=new FileReader();fr.onload=function(){var data=fr.result;S._lp=data;
 q=q.then(function(){return ghPut("logo."+ext,data.split(",")[1],true,"Update logo")}).then(function(){S.logo="logo."+ext+"?v="+Date.now();render();save()}).catch(function(e){say("Upload failed: "+e.message)})};fr.readAsDataURL(f)};
 S.history=normHist(S.history);render();tick();setInterval(tick,1000);
-fetch("data.json?v="+Date.now()).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d)return;if(Array.isArray(d.schedule))S.schedule=d.schedule;if(Array.isArray(d.results))S.results=d.results;if(Array.isArray(d.team))S.team=d.team;if(d.history&&typeof d.history==="object")S.history=normHist(d.history);S.logo=d.logo||null;render();tick()}).catch(function(){});
+fetch("data.json?v="+Date.now()).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d)return;if(Array.isArray(d.schedule))S.schedule=d.schedule;if(Array.isArray(d.results))S.results=d.results;if(Array.isArray(d.team))S.team=d.team;if(d.history&&typeof d.history==="object"){var rec0=S.history&&S.history.record;S.history=normHist(d.history);if(d.history.record===undefined)S.history.record=rec0||null}S.logo=d.logo||null;render();tick()}).catch(function(){});
 (function(){var h=location.hostname,p=location.pathname.split("/")[1],g="";
 if(/\.github\.io$/.test(h)){g=h.split(".")[0]+"/"+(p||h)}
 try{g=localStorage.getItem("fxc_repo")||g}catch(e){}
