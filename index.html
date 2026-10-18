@@ -102,8 +102,8 @@ footer span{opacity:.7}
 <h1>Run together.<br>Finish stronger.</h1>
 <p>Fairport Cross Country: miles, mud and teammates. Follow every meet, result and personal record all season long.</p>
 <a class="btn" href="#schedule">View schedule</a>
-<div class="next"><div><small>Next meet</small><strong id="nm">–</strong></div>
-<div class="cd"><div><strong id="d">0</strong><small>days</small></div><div><strong id="h">0</strong><small>hrs</small></div><div><strong id="m">0</strong><small>min</small></div></div></div>
+<div class="next"><div><small id="nl">Next meet</small><strong id="nm">–</strong></div>
+<div class="cd"><div><strong id="d">0</strong><small>days</small></div><div><strong id="h">0</strong><small>hrs</small></div><div><strong id="m">0</strong><small>min</small></div><div><strong id="sec">0</strong><small>sec</small></div></div></div>
 </div></header>
 
 <main class="wrap" id="mainv">
@@ -114,7 +114,7 @@ footer span{opacity:.7}
 <section id="schedule">
 <h2>Schedule</h2><p class="sub">Meets, invitationals and championships.</p>
 <div class="tabs" id="tabs"><button class="on" data-f="all">All</button><button data-f="up">Upcoming</button><button data-f="done">Completed</button></div>
-<div class="tbl"><table><thead><tr><th>Date</th><th>Meet</th><th>Location</th><th>Status</th></tr></thead><tbody id="sched"></tbody></table></div>
+<div class="tbl"><table><thead><tr><th>Date</th><th>Time</th><th>Meet</th><th>Location</th><th>Status</th></tr></thead><tbody id="sched"></tbody></table></div>
 </section>
 
 <section id="results">
@@ -150,7 +150,7 @@ footer span{opacity:.7}
 <div class="form"><div><label>New group name</label><input id="hgn" placeholder="State Champions"></div><div><button class="btn s" id="addGroup">Add group</button></div></div>
 <div class="form" style="margin-top:12px"><div><label>Quote</label><input id="hq"></div><div><label>Quote credit</label><input id="hb"></div><div><button class="btn s" id="saveQuote">Save quote</button></div></div>
 <h3>Add a meet</h3>
-<div class="form"><div><label>Date</label><input type="date" id="sd"></div><div><label>Meet</label><input id="sm"></div><div><label>Location</label><input id="sl"></div><div><button class="btn s" id="addMeet">Add meet</button></div></div>
+<div class="form"><div><label>Date</label><input type="date" id="sd"></div><div><label>Start time</label><input type="time" id="st"></div><div><label>Meet</label><input id="sm"></div><div><label>Location</label><input id="sl"></div><div><button class="btn s" id="addMeet">Add meet</button> <button class="btn s g" id="cancelMeet" style="display:none">Cancel</button></div></div>
 <div class="list" id="aList"></div>
 <h3>Add a result</h3>
 <div class="form"><div><label>Meet</label><input id="rm"></div><div><label>Date and placement</label><input id="rd" placeholder="Oct 10 · Team: 1st of 14"></div><div><label>Varsity Boys result</label><input id="rb" placeholder="1st · 38 pts"></div><div><label>JV Boys result</label><input id="rj" placeholder="2nd · 49 pts"></div><div><label>Top finisher</label><input id="rt" placeholder="A. Rivera · 16:42"></div><div><button class="btn s" id="addRes">Add result</button> <button class="btn s g" id="cancelRes" style="display:none">Cancel</button></div></div>
@@ -178,13 +178,13 @@ footer span{opacity:.7}
 <script>
 var SV=[["1","Alex Rivera","Sr","16:42"],["2","Jordan Okafor","So","17:11"],["3","Sam Brooks","Sr","17:38"],["4","Tyler Lane","Jr","17:54"],["5","Dylan Park","Jr","18:02"],["6","Evan Moore","So","18:20"],["7","Nate Silva","Fr","18:41"]],SJ=[["1","Ben Carter","So","18:30"],["2","Luke Nguyen","Fr","18:52"],["3","Owen Hayes","Fr","19:07"],["4","Max Rossi","So","19:25"],["5","Eli Grant","Fr","19:48"]];
 var S={schedule:[
-{date:"2026-09-12",meet:"Season Opener Time Trial",loc:"Home · Fairport"},
-{date:"2026-09-26",meet:"Dual Meet vs. Webster",loc:"Home · Fairport"},
-{date:"2026-10-03",meet:"Monroe County Meet",loc:"Churchville Park"},
-{date:"2026-10-10",meet:"Fairport Invitational",loc:"Home · Fairport"},
-{date:"2026-10-24",meet:"Section V Class A Qualifier",loc:"Letchworth State Park"},
-{date:"2026-11-07",meet:"Section V Championships",loc:"Sunnyside Park"},
-{date:"2026-11-14",meet:"NYSPHSAA State Championships",loc:"Sunken Meadow, Long Island"}],
+{date:"2026-09-12",time:"09:00",meet:"Season Opener Time Trial",loc:"Home · Fairport"},
+{date:"2026-09-26",time:"16:30",meet:"Dual Meet vs. Webster",loc:"Home · Fairport"},
+{date:"2026-10-03",time:"09:30",meet:"Monroe County Meet",loc:"Churchville Park"},
+{date:"2026-10-10",time:"10:00",meet:"Fairport Invitational",loc:"Home · Fairport"},
+{date:"2026-10-24",time:"09:30",meet:"Section V Class A Qualifier",loc:"Letchworth State Park"},
+{date:"2026-11-07",time:"10:00",meet:"Section V Championships",loc:"Sunnyside Park"},
+{date:"2026-11-14",time:"11:00",meet:"NYSPHSAA State Championships",loc:"Sunken Meadow, Long Island"}],
 results:[
 {meet:"Fairport Invitational",d:"Oct 10 · Team: 1st of 14",b:"1st · 38 pts",j:"2nd · 49 pts",t:"A. Rivera · 16:42",vi:SV,ji:SJ},
 {meet:"Monroe County Meet",d:"Oct 3 · Team: 3rd of 20",b:"3rd · 97 pts",j:"4th · 112 pts",t:"D. Park · 16:58",vi:SV,ji:SJ},
@@ -192,6 +192,7 @@ results:[
 var filter="all",canEdit=false,db=null;
 function esc(s){var e=document.createElement("div");e.textContent=s==null?"":String(s);return e.innerHTML}
 function fmt(s){return new Date(s+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}
+function ft(t){if(!t)return "";var p=String(t).split(":"),h=+p[0],ap=h>=12?"PM":"AM";h=h%12||12;return h+":"+p[1]+" "+ap}
 function isUp(m){return new Date(m.date+"T23:59:00")>=new Date()}
 function sorted(){return S.schedule.slice().sort(function(a,b){return a.date<b.date?-1:1})}
 function ini(n){return String(n).trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join("").toUpperCase()}
@@ -204,8 +205,8 @@ var q=document.getElementById("quote");q.innerHTML=h.quote?"“"+esc(h.quote)+"�
 function drawHistAdmin(){var h=S.history||{groups:[]};document.getElementById("hgList").innerHTML=(h.groups||[]).map(function(g,i){return '<div class="hg"><div class="hgh"><input data-gt="'+i+'" value="'+esc(g.title).replace(/"/g,"&quot;")+'"><button class="hx" data-k="hgr" data-i="'+i+'">Remove group</button></div><div class="chips">'+(g.years||[]).map(function(y){return '<span class="chip">'+esc(y)+' <button class="hx" data-k="hy" data-i="'+i+'" data-y="'+esc(y)+'" title="Remove year">✕</button></span>'}).join("")+'</div><div class="form" style="margin-top:10px"><div><input data-gy="'+i+'" placeholder="Add a year, like 2025"></div><div><button class="btn s" data-k="hya" data-i="'+i+'">Add year</button></div></div></div>'}).join("")}
 function render(){
 var rows="";sorted().forEach(function(m){var up=isUp(m);if(filter==="up"&&!up)return;if(filter==="done"&&up)return;
-rows+="<tr><td><strong>"+fmt(m.date)+"</strong></td><td>"+esc(m.meet)+"</td><td>"+esc(m.loc)+"</td><td><span class=\"tag "+(up?"up":"")+"\">"+(up?"Upcoming":"Final")+"</span></td></tr>"});
-document.getElementById("sched").innerHTML=rows||"<tr><td colspan=4>No meets to show.</td></tr>";
+rows+="<tr><td><strong>"+fmt(m.date)+"</strong></td><td>"+(ft(m.time)||"–")+"</td><td>"+esc(m.meet)+"</td><td>"+esc(m.loc)+"</td><td><span class=\"tag "+(up?"up":"")+"\">"+(up?"Upcoming":"Final")+"</span></td></tr>"});
+document.getElementById("sched").innerHTML=rows||"<tr><td colspan=5>No meets to show.</td></tr>";
 document.getElementById("resbox").innerHTML=S.results.map(function(r,i){return "<div class=\"card\"><h3>"+esc(r.meet)+"</h3><div class=\"d\">"+esc(r.d)+"</div><div class=\"btns\"><button class=\"rowb\" data-i=\""+i+"\" data-r=\"v\"><small>Varsity Boys</small><strong>"+esc(r.b||"–")+"</strong><em>View results ›</em></button><button class=\"rowb\" data-i=\""+i+"\" data-r=\"j\"><small>JV Boys</small><strong>"+esc(r.j||"–")+"</strong><em>View results ›</em></button></div><div class=\"row\"><span>Top finisher</span><span>"+esc(r.t)+"</span></div></div>"}).join("");
 document.getElementById("teambox").innerHTML=(S.team||[]).map(function(p){var meta=[p.grade,p.pr?"5K PR "+p.pr:""].filter(Boolean).join(" · ");return "<div class=\"ath\"><div class=\"av\">"+esc(ini(p.name||"?"))+"</div><strong>"+esc(p.name)+"</strong><br><small>"+esc(meta)+"</small></div>"}).join("")||"<p class=\"sub\">No team members yet.</p>";
 document.getElementById("athCount").textContent=(S.team||[]).length;
@@ -216,10 +217,12 @@ var nx=sorted().filter(isUp)[0];document.getElementById("nm").textContent=nx?nx.
 if(canEdit){
 drawHistAdmin();
 document.getElementById("tList").innerHTML=(S.team||[]).map(function(p,i){return "<div><span>"+esc(p.name)+(p.grade?" · "+esc(p.grade):"")+"</span><button class=\"x\" data-k=\"t\" data-i=\""+i+"\">Remove</button></div>"}).join("");
-document.getElementById("aList").innerHTML=sorted().map(function(m){return "<div><span>"+fmt(m.date)+" · "+esc(m.meet)+"</span><button class=\"x\" data-k=\"s\" data-i=\""+S.schedule.indexOf(m)+"\">Remove</button></div>"}).join("");
+document.getElementById("aList").innerHTML=sorted().map(function(m){return "<div><span>"+fmt(m.date)+(m.time?" "+ft(m.time):"")+" · "+esc(m.meet)+"</span><span><button class=\"x\" data-k=\"se\" data-i=\""+S.schedule.indexOf(m)+"\">Edit</button> <button class=\"x\" data-k=\"s\" data-i=\""+S.schedule.indexOf(m)+"\">Remove</button></span></div>"}).join("");
 document.getElementById("rList").innerHTML=S.results.map(function(r,i){return "<div><span>"+esc(r.meet)+"</span><span><button class=\"x\" data-k=\"re\" data-i=\""+i+"\">Edit</button> <button class=\"x\" data-k=\"ri\" data-i=\""+i+"\">Race results</button> <button class=\"x\" data-k=\"r\" data-i=\""+i+"\">Remove</button></span></div>"}).join("")}}
-function tick(){var nx=sorted().filter(isUp)[0],t=nx?new Date(nx.date+"T09:00:00")-new Date():0;if(t<0)t=0;
-document.getElementById("d").textContent=Math.floor(t/864e5);document.getElementById("h").textContent=Math.floor(t%864e5/36e5);document.getElementById("m").textContent=Math.floor(t%36e5/6e4)}
+function tick(){var nx=sorted().filter(isUp)[0],t=nx?new Date(nx.date+"T"+(nx.time||"09:00")+":00")-new Date():0;if(t<0)t=0;
+document.getElementById("nm").textContent=nx?nx.meet:"Season complete";
+document.getElementById("nl").textContent=(nx&&t===0?"Meet day":"Next meet")+(nx?" · "+fmt(nx.date)+(nx.time?" at "+ft(nx.time):""):"");
+document.getElementById("d").textContent=Math.floor(t/864e5);document.getElementById("h").textContent=Math.floor(t%864e5/36e5);document.getElementById("m").textContent=Math.floor(t%36e5/6e4);document.getElementById("sec").textContent=Math.floor(t%6e4/1e3)}
 function say(t){document.getElementById("msg").textContent=t}
 var GH=null,q=Promise.resolve();
 function gh(tok,method,path,body){return fetch("https://api.github.com"+path,{method:method,headers:{"Authorization":"Bearer "+tok,"Accept":"application/vnd.github+json"},body:body?JSON.stringify(body):undefined}).then(function(r){return r.json().catch(function(){return {}}).then(function(j){if(!r.ok)throw new Error(j.message||("GitHub error "+r.status));return j})})}
@@ -266,21 +269,27 @@ else return;render();save()});
 document.getElementById("hgList").addEventListener("change",function(e){var t=e.target;if(t.dataset.gt===undefined)return;S.history.groups[+t.dataset.gt].title=t.value.trim();drawHist();save()});
 document.getElementById("addGroup").onclick=function(){var n=document.getElementById("hgn").value.trim();if(!n){say("Enter a group name.");return}S.history.groups.push({title:n,years:[]});document.getElementById("hgn").value="";render();save()};
 document.getElementById("saveQuote").onclick=function(){S.history.quote=document.getElementById("hq").value.trim();S.history.by=document.getElementById("hb").value.trim();render();save()};
+var editM=-1;
+function cancelMeetEdit(){editM=-1;["sd","st","sm","sl"].forEach(function(id){document.getElementById(id).value=""});document.getElementById("addMeet").textContent="Add meet";document.getElementById("cancelMeet").style.display="none"}
+function editMeet(i){var m=S.schedule[i];if(!m)return;editM=i;document.getElementById("sd").value=m.date||"";document.getElementById("st").value=m.time||"";document.getElementById("sm").value=m.meet||"";document.getElementById("sl").value=m.loc||"";document.getElementById("addMeet").textContent="Save changes";document.getElementById("cancelMeet").style.display="";document.getElementById("sm").scrollIntoView({block:"center"});document.getElementById("sm").focus()}
+document.getElementById("cancelMeet").onclick=cancelMeetEdit;
 document.getElementById("addTeam").onclick=function(){var n=document.getElementById("tn").value.trim();if(!n){say("Add a name.");return}
 S.team=S.team||[];S.team.push({name:n,grade:document.getElementById("tg").value.trim(),pr:document.getElementById("tp").value.trim()});document.getElementById("tn").value=document.getElementById("tg").value=document.getElementById("tp").value="";render();save()};
 document.getElementById("addMeet").onclick=function(){var d=sd.value,m=sm.value.trim();if(!d||!m){say("Add a date and meet name.");return}
-S.schedule.push({date:d,meet:m,loc:sl.value.trim()});sm.value=sl.value="";render();save("schedule")};
+var o={date:d,time:document.getElementById("st").value,meet:m,loc:sl.value.trim()};
+if(editM>=0&&S.schedule[editM]){S.schedule[editM]=o}else{S.schedule.push(o)}
+cancelMeetEdit();render();save("schedule")};
 document.getElementById("addRes").onclick=function(){if(!rm.value.trim()){say("Add a meet name.");return}
 var o={meet:rm.value.trim(),d:rd.value.trim(),b:rb.value.trim(),j:rj.value.trim(),t:rt.value.trim()};
 if(editIdx>=0&&S.results[editIdx]){var c=S.results[editIdx];c.meet=o.meet;c.d=o.d;c.b=o.b;c.j=o.j;c.t=o.t}else{o.vi=[];o.ji=[];S.results.unshift(o)}
 cancelEdit();render();save("results")};
 document.getElementById("admin").addEventListener("click",function(e){var b=e.target.closest(".x");if(!b)return;
-if(b.dataset.k==="re"){editRes(+b.dataset.i)}else if(b.dataset.k==="ri"){raceRes(+b.dataset.i)}else if(b.dataset.k==="t"){S.team.splice(+b.dataset.i,1);render();save()}else if(b.dataset.k==="s"){S.schedule.splice(+b.dataset.i,1);render();save("schedule")}else{S.results.splice(+b.dataset.i,1);cancelEdit();render();save("results")}});
+if(b.dataset.k==="se"){editMeet(+b.dataset.i)}else if(b.dataset.k==="re"){editRes(+b.dataset.i)}else if(b.dataset.k==="ri"){raceRes(+b.dataset.i)}else if(b.dataset.k==="t"){S.team.splice(+b.dataset.i,1);render();save()}else if(b.dataset.k==="s"){S.schedule.splice(+b.dataset.i,1);cancelMeetEdit();render();save("schedule")}else{S.results.splice(+b.dataset.i,1);cancelEdit();render();save("results")}});
 document.getElementById("logoFile").onchange=function(){var f=this.files[0];if(!f)return;if(!GH){say("Sign in first.");return}
 var ext=(f.name.split(".").pop()||"png").toLowerCase().replace(/[^a-z0-9]/g,"");say("Uploading logo…");
 var fr=new FileReader();fr.onload=function(){var data=fr.result;S._lp=data;
 q=q.then(function(){return ghPut("logo."+ext,data.split(",")[1],true,"Update logo")}).then(function(){S.logo="logo."+ext+"?v="+Date.now();render();save()}).catch(function(e){say("Upload failed: "+e.message)})};fr.readAsDataURL(f)};
-S.history=normHist(S.history);render();tick();setInterval(tick,30000);
+S.history=normHist(S.history);render();tick();setInterval(tick,1000);
 fetch("data.json?v="+Date.now()).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d)return;if(Array.isArray(d.schedule))S.schedule=d.schedule;if(Array.isArray(d.results))S.results=d.results;if(Array.isArray(d.team))S.team=d.team;if(d.history&&typeof d.history==="object")S.history=normHist(d.history);S.logo=d.logo||null;render();tick()}).catch(function(){});
 (function(){var h=location.hostname,p=location.pathname.split("/")[1],g="";
 if(/\.github\.io$/.test(h)){g=h.split(".")[0]+"/"+(p||h)}
