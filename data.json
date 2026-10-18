@@ -287,7 +287,6 @@
    ]
   }
  ],
- "logo": null,
  "team": [
   {
    "name": "Alex Rivera",
@@ -309,5 +308,6 @@
    "grade": "Junior",
    "pr": "17:54"
   }
- ]
+ ],
+ "logo": "logo.jpg?v=1792288046582"
 }
