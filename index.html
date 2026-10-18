@@ -35,6 +35,9 @@ textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:
 .chip{padding:5px 13px;border:1px solid var(--line);border-radius:99px;background:var(--bg);font-variant-numeric:tabular-nums;font-weight:600;font-size:.9rem}
 .quote{margin:20px 0 0;border-left:4px solid var(--blue);padding:18px 22px;background:var(--surface);border-radius:0 12px 12px 0;font-family:Georgia,serif;font-style:italic;font-size:1.3rem;line-height:1.4}
 .quote cite{display:block;font:normal .85rem system-ui,sans-serif;color:var(--muted);margin-top:10px}
+.record{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;background:var(--hero);color:#fff;border-radius:12px;padding:14px 16px;border-bottom:3px solid var(--red)}
+.rc{text-align:center}.rc strong{display:block;font-family:Georgia,serif;font-size:1.6rem;line-height:1}.rc span{font-size:.68rem;opacity:.8;text-transform:uppercase;letter-spacing:.08em}
+.rcap{grid-column:1/-1;text-align:center;font-size:.75rem;opacity:.85;border-top:1px solid rgba(255,255,255,.2);padding-top:8px}
 .hg{border-top:1px solid var(--line);padding:12px 0}.hgh{display:flex;gap:10px;align-items:center;margin-bottom:8px;flex-wrap:wrap}.hgh input{max-width:300px;font-weight:600}
 .hx{background:none;border:0;color:var(--accent);cursor:pointer;font:inherit;font-size:.85rem;padding:0 2px}
 .foot{background:none;border:1px solid rgba(255,255,255,.3);color:inherit;opacity:.6;font:inherit;font-size:.72rem;padding:3px 10px;border-radius:99px;cursor:pointer}.foot:hover{opacity:1}
@@ -90,7 +93,7 @@ input,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-rad
 footer{margin-top:64px;background:var(--hero);color:var(--hero-t);padding:30px 0;font-size:.88rem;border-top:4px solid var(--red)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 footer span{opacity:.7}
-@media(max-width:640px){nav div.l{gap:10px;font-size:.8rem}.brand span{display:none}}
+@media(max-width:640px){.rc strong{font-size:1.35rem}nav div.l{gap:10px;font-size:.8rem}.brand span{display:none}}
 </style>
 </head>
 <body>
@@ -130,6 +133,7 @@ footer span{opacity:.7}
 
 <section id="history">
 <h2>Team history</h2><p class="sub">Years Fairport has won the title.</p>
+<div class="record" id="recbox" style="display:none"></div>
 <div class="hist" id="histbox"></div>
 <blockquote class="quote" id="quote"></blockquote>
 </section>
@@ -148,6 +152,8 @@ footer span{opacity:.7}
 <div class="note" style="margin:0 0 6px">Each group is a card on the site. Edit a group's name, add or remove years, or add a new group like State Champions.</div>
 <div id="hgList"></div>
 <div class="form"><div><label>New group name</label><input id="hgn" placeholder="State Champions"></div><div><button class="btn s" id="addGroup">Add group</button></div></div>
+<div class="note" style="margin:14px 0 6px">League meet record</div>
+<div class="form"><div><label>Wins</label><input id="rw" type="number" min="0"></div><div><label>Losses</label><input id="rl" type="number" min="0"></div><div><label>Since (year)</label><input id="ry" type="number"></div><div><button class="btn s" id="saveRec">Save record</button></div></div>
 <div class="form" style="margin-top:12px"><div><label>Quote</label><input id="hq"></div><div><label>Quote credit</label><input id="hb"></div><div><button class="btn s" id="saveQuote">Save quote</button></div></div>
 <h3>Add a meet</h3>
 <div class="form"><div><label>Date</label><input type="date" id="sd"></div><div><label>Start time</label><input type="time" id="st"></div><div><label>Meet</label><input id="sm"></div><div><label>Location</label><input id="sl"></div><div><button class="btn s" id="addMeet">Add meet</button> <button class="btn s g" id="cancelMeet" style="display:none">Cancel</button></div></div>
@@ -188,7 +194,7 @@ var S={schedule:[
 results:[
 {meet:"Fairport Invitational",d:"Oct 10 · Team: 1st of 14",b:"1st · 38 pts",j:"2nd · 49 pts",t:"A. Rivera · 16:42",vi:SV,ji:SJ},
 {meet:"Monroe County Meet",d:"Oct 3 · Team: 3rd of 20",b:"3rd · 97 pts",j:"4th · 112 pts",t:"D. Park · 16:58",vi:SV,ji:SJ},
-{meet:"Dual Meet vs. Webster",d:"Sep 26 · Home",b:"W 21–36",j:"W 24–33",t:"J. Okafor · 17:11",vi:SV,ji:SJ}],team:[{"name": "Alex Rivera", "grade": "Senior", "pr": "16:42"}, {"name": "Jordan Okafor", "grade": "Sophomore", "pr": "17:11"}, {"name": "Sam Brooks", "grade": "Senior", "pr": "17:38"}, {"name": "Tyler Lane", "grade": "Junior", "pr": "17:54"}],history:{"section": [2003, 2006, 2017, 2019, 2020, 2022, 2023, 2024], "county": [2003, 2006, 2016, 2017, 2020, 2021, 2022, 2023, 2024], "quote": "100% of me is nothing compared to 1% of the whole team", "by": "Eliud Kipchoge, first runner to break 2 hours in the marathon"},logo:null};
+{meet:"Dual Meet vs. Webster",d:"Sep 26 · Home",b:"W 21–36",j:"W 24–33",t:"J. Okafor · 17:11",vi:SV,ji:SJ}],team:[{"name": "Alex Rivera", "grade": "Senior", "pr": "16:42"}, {"name": "Jordan Okafor", "grade": "Sophomore", "pr": "17:11"}, {"name": "Sam Brooks", "grade": "Senior", "pr": "17:38"}, {"name": "Tyler Lane", "grade": "Junior", "pr": "17:54"}],history:{"section": [2003, 2006, 2017, 2019, 2020, 2022, 2023, 2024], "county": [2003, 2006, 2016, 2017, 2020, 2021, 2022, 2023, 2024], "quote": "100% of me is nothing compared to 1% of the whole team", "by": "Eliud Kipchoge, first runner to break 2 hours in the marathon", "record": {"wins": 307, "losses": 64, "since": 2005}},logo:null};
 var filter="all",canEdit=false,db=null;
 function esc(s){var e=document.createElement("div");e.textContent=s==null?"":String(s);return e.innerHTML}
 function fmt(s){return new Date(s+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}
@@ -197,9 +203,11 @@ function isUp(m){return new Date(m.date+"T23:59:00")>=new Date()}
 function sorted(){return S.schedule.slice().sort(function(a,b){return a.date<b.date?-1:1})}
 function ini(n){return String(n).trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join("").toUpperCase()}
 function chips(a){return (a||[]).map(function(y){return "<span class=\"chip\">"+esc(y)+"</span>"}).join("")}
-function normHist(h){h=h||{};if(Array.isArray(h.groups))return {groups:h.groups,quote:h.quote||"",by:h.by||""};
-var g=[];if(h.section)g.push({title:"Section V Champions",years:h.section});if(h.county)g.push({title:"Monroe County Champions",years:h.county});return {groups:g,quote:h.quote||"",by:h.by||""}}
+function normHist(h){h=h||{};if(Array.isArray(h.groups))return {groups:h.groups,quote:h.quote||"",by:h.by||"",record:h.record||null};
+var g=[];if(h.section)g.push({title:"Section V Champions",years:h.section});if(h.county)g.push({title:"Monroe County Champions",years:h.county});return {groups:g,quote:h.quote||"",by:h.by||"",record:h.record||null}}
 function drawHist(){var h=S.history||{groups:[]};
+var r=h.record,rb=document.getElementById("recbox");
+if(r&&(r.wins||r.losses)){var w=+r.wins||0,l=+r.losses||0,pct=(w+l)?(w/(w+l)*100).toFixed(1)+"%":"–";rb.style.display="grid";rb.innerHTML='<div class="rc"><strong>'+w+'</strong><span>League meet wins</span></div><div class="rc"><strong>'+l+'</strong><span>League meet losses</span></div><div class="rc"><strong>'+pct+'</strong><span>Win rate</span></div><div class="rcap">League meet record'+(r.since?' since '+esc(r.since):'')+'</div>'}else{rb.style.display="none"}
 document.getElementById("histbox").innerHTML=(h.groups||[]).map(function(g){var n=(g.years||[]).length;return '<div class="hcard"><h3>'+esc(g.title)+' <span class="cnt">'+n+(n===1?' title':' titles')+'</span></h3><div class="chips">'+chips(g.years)+'</div></div>'}).join("");
 var q=document.getElementById("quote");q.innerHTML=h.quote?"“"+esc(h.quote)+"”"+(h.by?"<cite>— "+esc(h.by)+"</cite>":""):"";q.style.display=h.quote?"block":"none"}
 function drawHistAdmin(){var h=S.history||{groups:[]};document.getElementById("hgList").innerHTML=(h.groups||[]).map(function(g,i){return '<div class="hg"><div class="hgh"><input data-gt="'+i+'" value="'+esc(g.title).replace(/"/g,"&quot;")+'"><button class="hx" data-k="hgr" data-i="'+i+'">Remove group</button></div><div class="chips">'+(g.years||[]).map(function(y){return '<span class="chip">'+esc(y)+' <button class="hx" data-k="hy" data-i="'+i+'" data-y="'+esc(y)+'" title="Remove year">✕</button></span>'}).join("")+'</div><div class="form" style="margin-top:10px"><div><input data-gy="'+i+'" placeholder="Add a year, like 2025"></div><div><button class="btn s" data-k="hya" data-i="'+i+'">Add year</button></div></div></div>'}).join("")}
@@ -259,7 +267,7 @@ document.getElementById("addRes").textContent="Save changes";document.getElement
 function raceRes(i){document.getElementById("im").value=String(i);document.getElementById("ir").value="v";loadInd();document.getElementById("il").scrollIntoView({block:"center"});document.getElementById("il").focus()}
 document.getElementById("cancelRes").onclick=cancelEdit;
 function yrs(v){var a=String(v).split(/[ ,]+/).map(Number).filter(function(n){return n>1900&&n<2200});return a}
-function fillHist(){var h=S.history||{};document.getElementById("hq").value=h.quote||"";document.getElementById("hb").value=h.by||""}
+function fillHist(){var h=S.history||{},r=h.record||{};document.getElementById("rw").value=r.wins===undefined?"":r.wins;document.getElementById("rl").value=r.losses===undefined?"":r.losses;document.getElementById("ry").value=r.since||"";document.getElementById("hq").value=h.quote||"";document.getElementById("hb").value=h.by||""}
 document.getElementById("hgList").addEventListener("click",function(e){var b=e.target.closest("[data-k]");if(!b)return;var i=+b.dataset.i,g=S.history.groups[i],k=b.dataset.k;
 if(k==="hgr"){if(!confirm("Remove this group?"))return;S.history.groups.splice(i,1)}
 else if(k==="hy"){g.years=g.years.filter(function(y){return String(y)!==b.dataset.y})}
@@ -268,6 +276,7 @@ var all=(g.years||[]).concat(add),o=[];all.sort(function(x,y){return x-y}).forEa
 else return;render();save()});
 document.getElementById("hgList").addEventListener("change",function(e){var t=e.target;if(t.dataset.gt===undefined)return;S.history.groups[+t.dataset.gt].title=t.value.trim();drawHist();save()});
 document.getElementById("addGroup").onclick=function(){var n=document.getElementById("hgn").value.trim();if(!n){say("Enter a group name.");return}S.history.groups.push({title:n,years:[]});document.getElementById("hgn").value="";render();save()};
+document.getElementById("saveRec").onclick=function(){S.history.record={wins:+document.getElementById("rw").value||0,losses:+document.getElementById("rl").value||0,since:+document.getElementById("ry").value||""};render();save()};
 document.getElementById("saveQuote").onclick=function(){S.history.quote=document.getElementById("hq").value.trim();S.history.by=document.getElementById("hb").value.trim();render();save()};
 var editM=-1;
 function cancelMeetEdit(){editM=-1;["sd","st","sm","sl"].forEach(function(id){document.getElementById(id).value=""});document.getElementById("addMeet").textContent="Add meet";document.getElementById("cancelMeet").style.display="none"}
