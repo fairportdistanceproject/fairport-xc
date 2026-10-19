@@ -1315,7 +1315,7 @@
   {
    "name": "Joey Marafioti",
    "grade": "Senior",
-   "pr": ""
+   "pr": "45:30"
   },
   {
    "name": "Celton Norter",
@@ -1449,7 +1449,12 @@
    }
   ],
   "quote": "100% of me is nothing compared to 1% of the whole team",
-  "by": "Eliud Kipchoge, first runner to break 2 hours in the marathon"
+  "by": "Eliud Kipchoge, first runner to break 2 hours in the marathon",
+  "record": {
+   "wins": 307,
+   "losses": 64,
+   "since": 2005
+  }
  },
  "logo": "logo.jpg?v=1792288046582"
 }
