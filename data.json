@@ -2,6 +2,8 @@
  "schedule": [
   {
    "date": "2026-09-04",
+   "time": "22:45",
+   "jv": "22:45",
    "meet": "8th Annual St. John Fisher Rodenbeck Invitational",
    "loc": "St. John Fisher University"
   },
