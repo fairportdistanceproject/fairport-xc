@@ -43,6 +43,7 @@ textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:
 .hx{background:none;border:0;color:var(--accent);cursor:pointer;font:inherit;font-size:.85rem;padding:0 2px}
 .subh{font-family:Georgia,serif;font-size:1.4rem;margin:0}
 #crSel{width:auto;min-width:240px;max-width:100%}
+.crbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:12px}.crbar input{width:auto;flex:1;min-width:220px;max-width:340px}
 .quotebar{background:var(--hero);color:#fff;text-align:center;padding:44px max(24px,calc((100% - 760px)/2));margin-top:64px;font-family:Georgia,serif;font-style:italic;font-size:clamp(1.2rem,3.2vw,1.7rem);line-height:1.45}.quotebar cite{display:block;font:normal .85rem system-ui,sans-serif;opacity:.75;margin-top:14px;letter-spacing:.04em}.quotebar+footer{margin-top:0}
 .fr{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.ig{display:inline-flex;align-items:center;gap:7px;color:inherit;text-decoration:none;opacity:.85;font-size:.88rem}.ig:hover{opacity:1;text-decoration:underline}.ig svg{width:18px;height:18px}
 footer .tl a{color:inherit;text-decoration:underline;text-underline-offset:2px}footer .tl a:hover{opacity:.8}
@@ -143,7 +144,7 @@ footer span{opacity:.7}
 <div id="courses" style="display:none;margin-top:30px">
 <h3 class="subh">Course records</h3>
 <p class="sub" style="margin-top:4px">Fastest Fairport times on each course.</p>
-<div style="margin-bottom:12px"><select id="crSel"></select></div>
+<div class="crbar"><select id="crSel"></select><input type="search" id="crQ" placeholder="Search names across all courses" autocomplete="off"></div>
 <div class="tabs" id="crTabs"></div>
 <div class="tbl"><table><thead id="crHead"></thead><tbody id="crBody"></tbody></table></div>
 <p style="margin:12px 0 0"><button class="btn s g" id="crMore" style="display:none"></button></p>
@@ -310,10 +311,19 @@ function drawCourses(){var box=document.getElementById("courses"),cs=R.courses||
 if(crI>=cs.length)crI=0;var c=cs[crI];if(crL>=c.lists.length)crL=0;
 document.getElementById("crSel").innerHTML=cs.map(function(x,i){return '<option value="'+i+'"'+(i===crI?' selected':'')+'>'+esc(x.name)+'</option>'}).join("");
 document.getElementById("crTabs").innerHTML=c.lists.map(function(l,i){return '<button data-l="'+i+'" class="'+(i===crL?'on':'')+'">'+esc(l.title)+'</button>'}).join("");
+var qv=document.getElementById("crQ").value.trim().toLowerCase();
+if(qv){var hits=[];
+if(qv.length>=2){cs.forEach(function(C){C.lists.forEach(function(L){L.rows.forEach(function(r,i){if(r[0].toLowerCase().indexOf(qv)>-1)hits.push([C.name,L.title,i+1,r])})})})}
+var shown=hits.slice(0,100);
+document.getElementById("crTabs").innerHTML='<span style="color:var(--muted);font-size:.9rem">'+(qv.length<2?'Type at least 2 letters to search all courses.':hits.length+' result'+(hits.length===1?'':'s')+' for “'+esc(qv)+'” across all courses'+(hits.length>100?' (showing the first 100, type more to narrow)':''))+'</span>';
+document.getElementById("crHead").innerHTML='<tr><th>Course</th><th>List</th><th>#</th><th>Name</th><th>Time</th><th>Grade</th><th>Year</th></tr>';
+document.getElementById("crBody").innerHTML=shown.map(function(h){return '<tr><td>'+esc(h[0])+'</td><td>'+esc(h[1])+'</td><td><strong>'+h[2]+'</strong></td><td>'+esc(h[3][0])+'</td><td>'+esc(h[3][1])+'</td><td>'+esc(h[3][2])+'</td><td>'+esc(h[3][3])+'</td></tr>'}).join("")||'<tr><td colspan=7>'+(qv.length<2?'':'No names match.')+'</td></tr>';
+document.getElementById("crMore").style.display="none";return}
 var l=c.lists[crL]||{rows:[]},rows=l.rows||[],hasG=rows.some(function(r){return r[2]}),lim=crAll?rows.length:10;
 document.getElementById("crHead").innerHTML='<tr><th>#</th><th>Name</th><th>Time</th>'+(hasG?'<th>Grade</th>':'')+'<th>Year</th></tr>';
 document.getElementById("crBody").innerHTML=rows.slice(0,lim).map(function(r,i){return '<tr><td><strong>'+(i+1)+'</strong></td><td>'+esc(r[0])+'</td><td>'+esc(r[1])+'</td>'+(hasG?'<td>'+esc(r[2])+'</td>':'')+'<td>'+esc(r[3])+'</td></tr>'}).join("")||'<tr><td colspan=5>No times yet.</td></tr>';
 var mb=document.getElementById("crMore");mb.style.display=rows.length>10?"inline-block":"none";mb.textContent=crAll?"Show top 10":"Show all "+rows.length}
+document.getElementById("crQ").addEventListener("input",function(){crAll=false;drawCourses()});
 document.getElementById("crSel").onchange=function(){crI=+this.value;crL=0;crAll=false;drawCourses()};
 document.getElementById("crTabs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;crL=+b.dataset.l;crAll=false;drawCourses()});
 document.getElementById("crMore").onclick=function(){crAll=!crAll;drawCourses()};
