@@ -134,9 +134,9 @@ footer span{opacity:.7}
 
 <section id="schedule">
 <h2>Schedule</h2><p class="sub">Meets, invitationals and championships.</p>
-<div class="bar"><div class="tabs" id="tabs"><button class="on" data-f="all">All</button><button data-f="up">Upcoming</button><button data-f="done">Completed</button></div><div class="tabs" id="layoutTabs"><button class="on" data-l="table">Table</button><button data-l="cards">Cards</button></div></div>
-<div class="tbl" id="schedtbl"><table><thead><tr><th>Date</th><th>JV race</th><th>Varsity race</th><th>Meet</th><th>Location</th><th>Status</th></tr></thead><tbody id="sched"></tbody></table></div>
-<div class="sc-cards" id="schedcards" style="display:none"></div>
+<div class="bar"><div class="tabs" id="tabs"><button class="on" data-f="all">All</button><button data-f="up">Upcoming</button><button data-f="done">Completed</button></div><div class="tabs" id="layoutTabs"><button class="on" data-l="cards">Cards</button><button data-l="table">Table</button></div></div>
+<div class="tbl" id="schedtbl" style="display:none"><table><thead><tr><th>Date</th><th>JV race</th><th>Varsity race</th><th>Meet</th><th>Location</th><th>Status</th></tr></thead><tbody id="sched"></tbody></table></div>
+<div class="sc-cards" id="schedcards"></div>
 </section>
 
 <section id="results">
@@ -247,7 +247,7 @@ if(r&&(r.wins||r.losses)){var w=+r.wins||0,l=+r.losses||0,pct=(w+l)?(w/(w+l)*100
 document.getElementById("histbox").innerHTML=(h.groups||[]).map(function(g){var n=(g.years||[]).length;return '<div class="hcard"><h3>'+esc(g.title)+' <span class="cnt">'+n+(n===1?' title':' titles')+'</span></h3><div class="chips">'+chips(g.years)+'</div></div>'}).join("");
 var q=document.getElementById("quote");q.innerHTML=h.quote?"“"+esc(h.quote)+"”"+(h.by?"<cite>— "+esc(h.by)+"</cite>":""):"";q.style.display=h.quote?"block":"none"}
 function drawHistAdmin(){var h=S.history||{groups:[]};document.getElementById("hgList").innerHTML=(h.groups||[]).map(function(g,i){return '<div class="hg"><div class="hgh"><input data-gt="'+i+'" value="'+esc(g.title).replace(/"/g,"&quot;")+'"><button class="hx" data-k="hgr" data-i="'+i+'">Remove group</button></div><div class="chips">'+(g.years||[]).map(function(y){return '<span class="chip">'+esc(y)+' <button class="hx" data-k="hy" data-i="'+i+'" data-y="'+esc(y)+'" title="Remove year">✕</button></span>'}).join("")+'</div><div class="form" style="margin-top:10px"><div><input data-gy="'+i+'" placeholder="Add a year, like 2025"></div><div><button class="btn s" data-k="hya" data-i="'+i+'">Add year</button></div></div></div>'}).join("")}
-var layoutS="table";
+var layoutS="cards";
 function rtime(m,k){var t=k==="j"?m.jv:m.time;if(!t)return '<span class="sc-none">–</span>';return ft(t)+((m.jv&&m.time&&m.jv===m.time)?' <span class="sc-none">(same time)</span>':'')}
 function rlab(m){if(m.jv&&m.time&&m.jv===m.time)return " at "+ft(m.time);var a=[];if(m.jv)a.push("JV "+ft(m.jv));if(m.time)a.push("Varsity "+ft(m.time));return a.length?" · "+a.join(" · "):""}
 function ft0(m){var a=[m.jv,m.time].filter(Boolean).sort();return a[0]||"09:00"}
