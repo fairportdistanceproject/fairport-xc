@@ -59,6 +59,9 @@ footer .tl a{color:inherit;text-decoration:underline;text-underline-offset:2px}f
 .sc-tag{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:99px;margin-right:6px;color:#fff}.sc-tag.v{background:var(--blue)}.sc-tag.j{background:var(--red)}
 .chk{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:.9rem;color:var(--text)}.chk input{width:auto}
 .rdist{display:inline-flex;align-items:baseline;gap:10px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;padding:8px 16px;margin-bottom:16px}.rdist span{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.rdist strong{font-size:1.05rem}
+.prsrc{font-size:.7rem;opacity:.75}
+.prc{text-align:center;width:72px}.prc .prbox{margin-left:0}
+.prbox{display:inline-block;background:var(--red);color:#fff;font-size:.66rem;font-weight:700;letter-spacing:.06em;padding:1px 7px;border-radius:4px;margin-left:8px;vertical-align:middle}
 .foot{background:none;border:1px solid rgba(255,255,255,.3);color:inherit;opacity:.6;font:inherit;font-size:.72rem;padding:3px 10px;border-radius:99px;cursor:pointer}.foot:hover{opacity:1}
 .team{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
 .ath{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--red);border-radius:12px;padding:18px;text-align:center}
@@ -174,7 +177,8 @@ footer span{opacity:.7}
 <h3>Last updated (shown in the footer)</h3>
 <div class="form"><div><label>Date</label><input type="date" id="ud"></div><div><button class="btn s" id="saveUpd">Save date</button> <button class="btn s g" id="todayUpd">Use today</button> <button class="btn s g" id="clearUpd">Hide it</button></div></div>
 <h3>Team members</h3>
-<div class="form"><div><label>Name</label><input id="tn"></div><div><label>Grade</label><input id="tg" placeholder="Senior"></div><div><label>5K PR</label><input id="tp" placeholder="16:42"></div><div><button class="btn s" id="addTeam">Add person</button> <button class="btn s g" id="cancelTeam" style="display:none">Cancel</button></div></div>
+<div class="note" style="margin:0 0 8px">5K PRs fill in automatically from race results marked as a 5K, matched by name, so spell names the same way in the roster and the results. Type a PR here only to keep an older, faster time or to start someone off.</div>
+<div class="form"><div><label>Name</label><input id="tn"></div><div><label>Grade</label><input id="tg" placeholder="Senior"></div><div><label>5K PR (optional)</label><input id="tp" placeholder="16:42"></div><div><button class="btn s" id="addTeam">Add person</button> <button class="btn s g" id="cancelTeam" style="display:none">Cancel</button></div></div>
 <div class="list" id="tList"></div>
 <h3>Team history</h3>
 <div class="note" style="margin:0 0 6px">Each group is a card on the site. Edit a group's name, add or remove years, or add a new group like State Champions.</div>
@@ -211,7 +215,7 @@ footer span{opacity:.7}
 <h2 id="rpTitle"></h2><p class="sub" id="rpSub"></p>
 <div class="tabs" id="rpTabs"><button data-r="v">Varsity Boys</button><button data-r="j">JV Boys</button></div>
 <div class="rdist" id="rpDist" style="display:none"><span>Distance</span><strong id="rpDistVal"></strong></div>
-<div class="tbl"><table><thead><tr><th>Place</th><th>Athlete</th><th>Grade</th><th>Time</th></tr></thead><tbody id="rpBody"></tbody></table></div>
+<div class="tbl"><table><thead><tr><th>Place</th><th>Athlete</th><th>Grade</th><th>Time</th><th id="rpPrTh" class="prc" style="display:none"></th></tr></thead><tbody id="rpBody"></tbody></table></div>
 </div>
 
 <div class="quotebar" id="quote" style="display:none"></div>
@@ -239,6 +243,13 @@ function fmt(s){return new Date(s+"T12:00:00").toLocaleDateString("en-US",{month
 function ft(t){if(!t)return "";var p=String(t).split(":"),h=+p[0],ap=h>=12?"PM":"AM";h=h%12||12;return h+":"+p[1]+" "+ap}
 function isUp(m){return new Date(m.date+"T23:59:00")>=new Date()}
 function sorted(){return S.schedule.slice().sort(function(a,b){return a.date<b.date?-1:1})}
+function is5k(d){var x=String(d||"").toLowerCase().replace(/\s+/g,"");return /^(5k|5km|5000m?|5kilometers?|3\.1\d*(mi|mile|miles))$/.test(x)}
+function prMap(){var best={};(S.results||[]).forEach(function(r){[["vd","vi"],["jd","ji"]].forEach(function(k){if(!is5k(r[k[0]]))return;(r[k[1]]||[]).forEach(function(x){var n=String(x[1]||"").trim().toLowerCase(),t=x[3];if(!n||!t||tsec(t)>=1e9)return;if(!best[n]||tsec(t)<tsec(best[n].t))best[n]={t:t,meet:r.meet}})})});return best}
+function effPR(p,pm){var b=pm[String(p.name||"").trim().toLowerCase()],pr=p.pr||"",src="";if(b&&(!pr||tsec(b.t)<=tsec(pr))){pr=b.t;src=b.meet}return {pr:pr,src:src}}
+function isPR(r,dv,x,pm){if(!is5k(dv)||!x[3]||tsec(x[3])>=1e9)return false;var n=String(x[1]||"").trim().toLowerCase();if(!n)return false;
+var p=null;(S.team||[]).forEach(function(t){if(String(t.name||"").trim().toLowerCase()===n)p=t});
+if(p){var e=effPR(p,pm);return e.src===r.meet&&tsec(e.pr)===tsec(x[3])}
+var b=pm[n];return !!b&&b.meet===r.meet&&tsec(b.t)===tsec(x[3])}
 function ini(n){return String(n).trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join("").toUpperCase()}
 function chips(a){return (a||[]).map(function(y){return "<span class=\"chip\">"+esc(y)+"</span>"}).join("")}
 function normHist(h){h=h||{};if(Array.isArray(h.groups))return {groups:h.groups,quote:h.quote||"",by:h.by||"",record:h.record||null};
@@ -263,7 +274,7 @@ document.getElementById("sched").innerHTML=rows||"<tr><td colspan=6>No meets to 
 document.getElementById("schedcards").innerHTML=cards||'<p class="sub">No meets to show.</p>';
 document.getElementById("schedtbl").style.display=layoutS==="table"?"":"none";document.getElementById("schedcards").style.display=layoutS==="cards"?"":"none";
 document.getElementById("resbox").innerHTML=S.results.map(function(r,i){return "<div class=\"card\"><h3>"+esc(r.meet)+"</h3><div class=\"d\">"+esc(r.d)+"</div><div class=\"btns\"><button class=\"rowb\" data-i=\""+i+"\" data-r=\"v\"><small>Varsity Boys</small><strong>"+esc(r.b||"–")+"</strong><em>View results ›</em></button><button class=\"rowb\" data-i=\""+i+"\" data-r=\"j\"><small>JV Boys</small><strong>"+esc(r.j||"–")+"</strong><em>View results ›</em></button></div><div class=\"row\"><span>Top finisher</span><span>"+esc(r.t)+"</span></div></div>"}).join("");
-document.getElementById("teambox").innerHTML=(S.team||[]).map(function(p){var meta=[p.grade,p.pr?"5K PR "+p.pr:""].filter(Boolean).join(" · ");return "<div class=\"ath\"><div class=\"av\">"+esc(ini(p.name||"?"))+"</div><strong>"+esc(p.name)+"</strong><br><small>"+esc(meta)+"</small></div>"}).join("")||"<p class=\"sub\">No team members yet.</p>";
+var pmr=prMap();document.getElementById("teambox").innerHTML=(S.team||[]).map(function(p){var e=effPR(p,pmr),meta=[p.grade,e.pr?"5K PR "+e.pr:""].filter(Boolean).join(" · ");return "<div class=\"ath\"><div class=\"av\">"+esc(ini(p.name||"?"))+"</div><strong>"+esc(p.name)+"</strong><br><small>"+esc(meta)+"</small>"+(e.src?"<br><small class=\"prsrc\">"+esc(e.src)+"</small>":"")+"</div>"}).join("")||"<p class=\"sub\">No team members yet.</p>";
 document.getElementById("athCount").textContent=(S.team||[]).length;
 drawHist();drawCourses();
 var ue=document.getElementById("upd"),ud0=S.updated?new Date(S.updated+"T12:00:00"):null;ue.textContent=S.updated?"Last updated: "+(isNaN(ud0)?S.updated:ud0.toLocaleDateString("en-US",{month:"long",day:"numeric",year:"numeric"})):"";
@@ -272,7 +283,7 @@ if(S.logo){lg.innerHTML="";var i=new Image();i.alt="Fairport Distance Project lo
 var nx=sorted().filter(isUp)[0];document.getElementById("nm").textContent=nx?nx.meet:"Season complete";
 if(canEdit){
 drawHistAdmin();
-document.getElementById("tList").innerHTML=(S.team||[]).map(function(p,i){return "<div><span>"+esc(p.name)+(p.grade?" · "+esc(p.grade):"")+(p.pr?" · "+esc(p.pr):"")+"</span><span><button class=\"x\" data-k=\"te\" data-i=\""+i+"\">Edit</button> <button class=\"x\" data-k=\"t\" data-i=\""+i+"\">Remove</button></span></div>"}).join("");
+var pm2=prMap();document.getElementById("tList").innerHTML=(S.team||[]).map(function(p,i){var e=effPR(p,pm2);return "<div><span>"+esc(p.name)+(p.grade?" · "+esc(p.grade):"")+(e.pr?" · "+esc(e.pr):"")+"</span><span><button class=\"x\" data-k=\"te\" data-i=\""+i+"\">Edit</button> <button class=\"x\" data-k=\"t\" data-i=\""+i+"\">Remove</button></span></div>"}).join("");
 document.getElementById("aList").innerHTML=sorted().map(function(m){return "<div><span>"+fmt(m.date)+rlab(m)+" · "+esc(m.meet)+"</span><span><button class=\"x\" data-k=\"se\" data-i=\""+S.schedule.indexOf(m)+"\">Edit</button> <button class=\"x\" data-k=\"s\" data-i=\""+S.schedule.indexOf(m)+"\">Remove</button></span></div>"}).join("");
 document.getElementById("rList").innerHTML=S.results.map(function(r,i){return "<div><span>"+esc(r.meet)+"</span><span><button class=\"x\" data-k=\"re\" data-i=\""+i+"\">Edit</button> <button class=\"x\" data-k=\"ri\" data-i=\""+i+"\">Race results</button> <button class=\"x\" data-k=\"r\" data-i=\""+i+"\">Remove</button></span></div>"}).join("")}}
 function tick(){var nx=sorted().filter(isUp)[0],t=nx?new Date(nx.date+"T"+ft0(nx)+":00")-new Date():0;if(t<0)t=0;
@@ -294,7 +305,8 @@ document.getElementById("rpTitle").textContent=r.meet;
 document.getElementById("rpSub").textContent=r.d+" · Varsity "+(r.b||"–")+" · JV "+(r.j||"–");
 var dv=(k==="v"?r.vd:r.jd);document.getElementById("rpDist").style.display=dv?"inline-flex":"none";document.getElementById("rpDistVal").textContent=dv||"";
 document.querySelectorAll("#rpTabs button").forEach(function(b){b.classList.toggle("on",b.dataset.r===k)});
-document.getElementById("rpBody").innerHTML=rows.length?rows.map(function(x){return "<tr><td><strong>"+esc(x[0])+"</strong></td><td>"+esc(x[1])+"</td><td>"+esc(x[2])+"</td><td>"+esc(x[3])+"</td></tr>"}).join(""):"<tr><td colspan=4>Individual results have not been posted yet.</td></tr>";
+var pmP=prMap(),flags=rows.map(function(x){return isPR(r,dv,x,pmP)}),anyPR=flags.some(Boolean);document.getElementById("rpPrTh").style.display=anyPR?"":"none";
+document.getElementById("rpBody").innerHTML=rows.length?rows.map(function(x,i){return "<tr><td><strong>"+esc(x[0])+"</strong></td><td>"+esc(x[1])+"</td><td>"+esc(x[2])+"</td><td>"+esc(x[3])+"</td>"+(anyPR?"<td class=\"prc\">"+(flags[i]?"<span class=\"prbox\">PR</span>":"")+"</td>":"")+"</tr>"}).join(""):"<tr><td colspan=5>Individual results have not been posted yet.</td></tr>";
 }
 function hideRace(){document.getElementById("herov").style.display="";document.getElementById("mainv").style.display="";document.getElementById("racepage").style.display="none"}
 document.getElementById("resbox").addEventListener("click",function(e){var b=e.target.closest(".rowb");if(!b)return;showRace(+b.dataset.i,b.dataset.r)});
