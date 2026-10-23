@@ -60,7 +60,7 @@ footer .tl a{color:inherit;text-decoration:underline;text-underline-offset:2px}f
 .chk{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:.9rem;color:var(--text)}.chk input{width:auto}
 .rdist{display:inline-flex;align-items:baseline;gap:10px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--red);border-radius:10px;padding:8px 16px;margin-bottom:16px}.rdist span{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}.rdist strong{font-size:1.05rem}
 .prsrc{font-size:.7rem;opacity:.75}
-.prc{text-align:center;width:72px}.prc .prbox{margin-left:0}
+.prc{text-align:center;width:64px}.prc .prbox{margin-left:0}
 .prbox{display:inline-block;background:var(--red);color:#fff;font-size:.66rem;font-weight:700;letter-spacing:.06em;padding:1px 7px;border-radius:4px;margin-left:8px;vertical-align:middle}
 .foot{background:none;border:1px solid rgba(255,255,255,.3);color:inherit;opacity:.6;font:inherit;font-size:.72rem;padding:3px 10px;border-radius:99px;cursor:pointer}.foot:hover{opacity:1}
 .team{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
@@ -115,7 +115,7 @@ input,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-rad
 footer{margin-top:64px;background:var(--hero);color:var(--hero-t);padding:30px 0;font-size:.88rem;border-top:4px solid var(--red)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 footer span{opacity:.7}
-@media(max-width:640px){.rc strong{font-size:1.35rem}nav div.l{gap:10px;font-size:.8rem}.brand span{display:none}}
+@media(max-width:640px){.rc strong{font-size:1.35rem}nav div.l{gap:10px;font-size:.8rem}.brand>span:last-child{display:none}}
 </style>
 </head>
 <body>
@@ -215,7 +215,7 @@ footer span{opacity:.7}
 <h2 id="rpTitle"></h2><p class="sub" id="rpSub"></p>
 <div class="tabs" id="rpTabs"><button data-r="v">Varsity Boys</button><button data-r="j">JV Boys</button></div>
 <div class="rdist" id="rpDist" style="display:none"><span>Distance</span><strong id="rpDistVal"></strong></div>
-<div class="tbl"><table><thead><tr><th>Place</th><th>Athlete</th><th>Grade</th><th>Time</th><th id="rpPrTh" class="prc" style="display:none"></th></tr></thead><tbody id="rpBody"></tbody></table></div>
+<div class="tbl"><table><thead><tr><th>Place</th><th id="rpPrTh" class="prc" style="display:none"></th><th>Athlete</th><th>Grade</th><th>Time</th></tr></thead><tbody id="rpBody"></tbody></table></div>
 </div>
 
 <div class="quotebar" id="quote" style="display:none"></div>
@@ -306,7 +306,7 @@ document.getElementById("rpSub").textContent=r.d+" · Varsity "+(r.b||"–")+" �
 var dv=(k==="v"?r.vd:r.jd);document.getElementById("rpDist").style.display=dv?"inline-flex":"none";document.getElementById("rpDistVal").textContent=dv||"";
 document.querySelectorAll("#rpTabs button").forEach(function(b){b.classList.toggle("on",b.dataset.r===k)});
 var pmP=prMap(),flags=rows.map(function(x){return isPR(r,dv,x,pmP)}),anyPR=flags.some(Boolean);document.getElementById("rpPrTh").style.display=anyPR?"":"none";
-document.getElementById("rpBody").innerHTML=rows.length?rows.map(function(x,i){return "<tr><td><strong>"+esc(x[0])+"</strong></td><td>"+esc(x[1])+"</td><td>"+esc(x[2])+"</td><td>"+esc(x[3])+"</td>"+(anyPR?"<td class=\"prc\">"+(flags[i]?"<span class=\"prbox\">PR</span>":"")+"</td>":"")+"</tr>"}).join(""):"<tr><td colspan=5>Individual results have not been posted yet.</td></tr>";
+document.getElementById("rpBody").innerHTML=rows.length?rows.map(function(x,i){return "<tr><td><strong>"+esc(x[0])+"</strong></td>"+(anyPR?"<td class=\"prc\">"+(flags[i]?"<span class=\"prbox\">PR</span>":"")+"</td>":"")+"<td>"+esc(x[1])+"</td><td>"+esc(x[2])+"</td><td>"+esc(x[3])+"</td></tr>"}).join(""):"<tr><td colspan=5>Individual results have not been posted yet.</td></tr>";
 }
 function hideRace(){document.getElementById("herov").style.display="";document.getElementById("mainv").style.display="";document.getElementById("racepage").style.display="none"}
 document.getElementById("resbox").addEventListener("click",function(e){var b=e.target.closest(".rowb");if(!b)return;showRace(+b.dataset.i,b.dataset.r)});
