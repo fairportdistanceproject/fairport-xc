@@ -473,7 +473,7 @@
    "t": "P. Rinefierd 17:49",
    "races": [
     {
-     "name": "Varsity",
+     "name": "Varsity Boys",
      "res": "LM Score",
      "dist": "5K",
      "rows": [
@@ -636,7 +636,7 @@
      ]
     },
     {
-     "name": "JV",
+     "name": "JV Boys",
      "res": "None",
      "dist": "",
      "rows": []
