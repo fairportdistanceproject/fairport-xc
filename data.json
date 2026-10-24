@@ -217,7 +217,7 @@
    "t": "T. Ruder 16:54",
    "races": [
     {
-     "name": "Varsity",
+     "name": "Varsity Boys",
      "res": "LM Score",
      "dist": "2.95 miles",
      "rows": [
@@ -374,7 +374,7 @@
      ]
     },
     {
-     "name": "JV",
+     "name": "JV Boys",
      "res": "None",
      "dist": "",
      "rows": []
