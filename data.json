@@ -169,7 +169,80 @@
      "name": "Freshman • Sophomore",
      "res": "2nd • 69 pts",
      "dist": "2 mile",
-     "rows": []
+     "rows": [
+      [
+       "2",
+       "Hayden Ruder",
+       "9",
+       "10:25.4"
+      ],
+      [
+       "10",
+       "Eli Frank",
+       "9",
+       "11:00.4"
+      ],
+      [
+       "17",
+       "Charlie Faber",
+       "10",
+       "11:21.3"
+      ],
+      [
+       "19",
+       "Jackson Lapointe",
+       "10",
+       "11:24.7"
+      ],
+      [
+       "21",
+       "Carmine Ondik",
+       "9",
+       "11:29.8"
+      ],
+      [
+       "32",
+       "Emmet Maidment-Foley",
+       "9",
+       "11:51.0"
+      ],
+      [
+       "40",
+       "Nate Pulcini",
+       "10",
+       "12:14.6"
+      ],
+      [
+       "43",
+       "Gabe Gerlach",
+       "10",
+       "12:21.1"
+      ],
+      [
+       "45",
+       "Jack Romagnola",
+       "9",
+       "12:26.3"
+      ],
+      [
+       "67",
+       "Shubhang Vaisravanath",
+       "10",
+       "13:00.4"
+      ],
+      [
+       "76",
+       "Eli Crockett",
+       "9",
+       "13:26.0"
+      ],
+      [
+       "94",
+       "Ryan Sak",
+       "10",
+       "14:15.8"
+      ]
+     ]
     }
    ]
   },
