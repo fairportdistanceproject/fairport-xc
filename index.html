@@ -24,7 +24,7 @@ nav .wrap{display:flex;align-items:center;justify-content:space-between;height:5
 .mark{width:38px;height:38px;border-radius:50%;background:var(--red);display:grid;place-items:center;font-size:.78rem;font-weight:800;border:2px solid #fff}
 nav div.l{display:flex;gap:16px;font-size:.88rem}
 nav a{color:inherit;text-decoration:none;opacity:.85}nav a:hover{opacity:1}
-.btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0 4px}.rowb{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border:0;border-bottom:3px solid var(--red);border-radius:10px;background:var(--blue);color:#fff;font:inherit;text-align:left;cursor:pointer;box-shadow:0 2px 6px rgba(10,42,102,.25);transition:transform .1s,background .1s}.rowb small{opacity:.8;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em}.rowb strong{font-size:1rem}.rowb em{font-style:normal;font-size:.78rem;color:#ffb3be;margin-top:4px}.rowb:hover{background:var(--red);transform:translateY(-1px)}.rowb:hover em{color:#fff}
+.btns{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:12px 0 4px}.rowb{display:flex;flex-direction:column;gap:2px;padding:12px 14px;border:0;border-bottom:3px solid var(--red);border-radius:10px;background:var(--blue);color:#fff;font:inherit;text-align:left;cursor:pointer;box-shadow:0 2px 6px rgba(10,42,102,.25);transition:transform .1s,background .1s}.rowb small{opacity:.8;font-size:.7rem;text-transform:uppercase;letter-spacing:.08em}.rowb strong{font-size:1rem}.rowb em{font-style:normal;font-size:.78rem;color:#ffb3be;margin-top:4px}.rowb:hover{background:var(--red);transform:translateY(-1px)}.rowb:hover em{color:#fff}
 .back{background:none;border:0;color:var(--accent);font:inherit;font-weight:600;cursor:pointer;padding:0;margin-bottom:14px}
 #racepage{padding-top:34px;min-height:60vh}
 textarea{width:100%;padding:9px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--text);font:inherit;font-size:.9rem}
@@ -198,11 +198,15 @@ footer span{opacity:.7}
 <label class="chk"><input type="checkbox" id="ss"> Both races start at the same time</label>
 <div class="list" id="aList"></div>
 <h3>Add a result</h3>
-<div class="form"><div><label>Meet</label><input id="rm"></div><div><label>Date and placement</label><input id="rd" placeholder="Oct 10 · Team: 1st of 14"></div><div><label>Varsity Boys result</label><input id="rb" placeholder="1st · 38 pts"></div><div><label>JV Boys result</label><input id="rj" placeholder="2nd · 49 pts"></div><div><label>Varsity distance</label><input id="rvd" placeholder="5K"></div><div><label>JV distance</label><input id="rjd" placeholder="5K"></div><div><label>Top finisher</label><input id="rt" placeholder="A. Rivera · 16:42"></div><div><button class="btn s" id="addRes">Add result</button> <button class="btn s g" id="cancelRes" style="display:none">Cancel</button></div></div>
+<div class="form"><div><label>Meet</label><input id="rm"></div><div><label>Date and placement</label><input id="rd" placeholder="Oct 10 · Team: 1st of 14"></div><div><label>Top finisher</label><input id="rt" placeholder="A. Rivera · 16:42"></div></div>
+<div class="note" style="margin:12px 0 6px">Races at this meet. Rename a tab, set its distance, or add more races. Varsity and JV are the defaults.</div>
+<div id="raceRows"></div>
+<div style="margin-top:6px"><button class="btn s g" id="addRace">Add another race</button></div>
+<div style="margin-top:12px"><button class="btn s" id="addRes">Add result</button> <button class="btn s g" id="cancelRes" style="display:none">Cancel</button></div>
 <div class="list" id="rList"></div>
 <h3>Individual race results</h3>
 <div class="note" style="margin:0 0 8px">Pick a meet and race, edit the lines below, then click Save race results. Or click Race results next to a meet above.</div>
-<div class="form"><div><label>Meet</label><select id="im"></select></div><div><label>Race</label><select id="ir"><option value="v">Varsity Boys</option><option value="j">JV Boys</option></select></div></div>
+<div class="form"><div><label>Meet</label><select id="im"></select></div><div><label>Race</label><select id="ir"></select></div></div>
 <div style="margin-top:10px"><label style="font-size:.75rem;color:var(--muted);display:block">One athlete per line: place, name, grade, time</label><textarea id="il" rows="6" placeholder="1, Alex Rivera, Sr, 16:42"></textarea></div>
 <div style="margin-top:10px"><button class="btn s" id="saveInd">Save race results</button></div>
 <div id="msg"></div>
@@ -213,7 +217,7 @@ footer span{opacity:.7}
 <div id="racepage" class="wrap" style="display:none">
 <button class="back" id="backBtn">‹ Back to results</button>
 <h2 id="rpTitle"></h2><p class="sub" id="rpSub"></p>
-<div class="tabs" id="rpTabs"><button data-r="v">Varsity Boys</button><button data-r="j">JV Boys</button></div>
+<div class="tabs" id="rpTabs"></div>
 <div class="rdist" id="rpDist" style="display:none"><span>Distance</span><strong id="rpDistVal"></strong></div>
 <div class="tbl"><table><thead><tr><th>Place</th><th id="rpPrTh" class="prc" style="display:none"></th><th>Athlete</th><th>Grade</th><th>Time</th></tr></thead><tbody id="rpBody"></tbody></table></div>
 </div>
@@ -244,12 +248,16 @@ function ft(t){if(!t)return "";var p=String(t).split(":"),h=+p[0],ap=h>=12?"PM":
 function isUp(m){return new Date(m.date+"T23:59:00")>=new Date()}
 function sorted(){return S.schedule.slice().sort(function(a,b){return a.date<b.date?-1:1})}
 function is5k(d){var x=String(d||"").toLowerCase().replace(/\s+/g,"");return /^(5k|5km|5000m?|5kilometers?|3\.1\d*(mi|mile|miles))$/.test(x)}
-function prMap(){var best={};(S.results||[]).forEach(function(r){[["vd","vi"],["jd","ji"]].forEach(function(k){if(!is5k(r[k[0]]))return;(r[k[1]]||[]).forEach(function(x){var n=String(x[1]||"").trim().toLowerCase(),t=x[3];if(!n||!t||tsec(t)>=1e9)return;if(!best[n]||tsec(t)<tsec(best[n].t))best[n]={t:t,meet:r.meet}})})});return best}
+function prMap(){var best={};(S.results||[]).forEach(function(r){(r.races||[]).forEach(function(rc){if(!is5k(rc.dist))return;(rc.rows||[]).forEach(function(x){var n=String(x[1]||"").trim().toLowerCase(),t=x[3];if(!n||!t||tsec(t)>=1e9)return;if(!best[n]||tsec(t)<tsec(best[n].t))best[n]={t:t,meet:r.meet}})})});return best}
 function effPR(p,pm){var b=pm[String(p.name||"").trim().toLowerCase()],pr=p.pr||"",src="";if(b&&(!pr||tsec(b.t)<=tsec(pr))){pr=b.t;src=b.meet}return {pr:pr,src:src}}
 function isPR(r,dv,x,pm){if(!is5k(dv)||!x[3]||tsec(x[3])>=1e9)return false;var n=String(x[1]||"").trim().toLowerCase();if(!n)return false;
 var p=null;(S.team||[]).forEach(function(t){if(String(t.name||"").trim().toLowerCase()===n)p=t});
 if(p){var e=effPR(p,pm);return e.src===r.meet&&tsec(e.pr)===tsec(x[3])}
 var b=pm[n];return !!b&&b.meet===r.meet&&tsec(b.t)===tsec(x[3])}
+function normRes(r){if(Array.isArray(r.races))return r;
+r.races=[{name:"Varsity",res:r.b||"",dist:r.vd||"",rows:r.vi||[]},{name:"JV",res:r.j||"",dist:r.jd||"",rows:r.ji||[]}];
+delete r.b;delete r.j;delete r.vd;delete r.jd;delete r.vi;delete r.ji;return r}
+function normAll(){S.results=(S.results||[]).map(normRes)}
 function ini(n){return String(n).trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join("").toUpperCase()}
 function chips(a){return (a||[]).map(function(y){return "<span class=\"chip\">"+esc(y)+"</span>"}).join("")}
 function normHist(h){h=h||{};if(Array.isArray(h.groups))return {groups:h.groups,quote:h.quote||"",by:h.by||"",record:h.record||null};
@@ -273,7 +281,7 @@ rows+="<tr><td><strong>"+fmt(m.date)+"</strong></td><td class=\"sc-t\">"+rtime(m
 document.getElementById("sched").innerHTML=rows||"<tr><td colspan=6>No meets to show.</td></tr>";
 document.getElementById("schedcards").innerHTML=cards||'<p class="sub">No meets to show.</p>';
 document.getElementById("schedtbl").style.display=layoutS==="table"?"":"none";document.getElementById("schedcards").style.display=layoutS==="cards"?"":"none";
-document.getElementById("resbox").innerHTML=S.results.map(function(r,i){return "<div class=\"card\"><h3>"+esc(r.meet)+"</h3><div class=\"d\">"+esc(r.d)+"</div><div class=\"btns\"><button class=\"rowb\" data-i=\""+i+"\" data-r=\"v\"><small>Varsity Boys</small><strong>"+esc(r.b||"–")+"</strong><em>View results ›</em></button><button class=\"rowb\" data-i=\""+i+"\" data-r=\"j\"><small>JV Boys</small><strong>"+esc(r.j||"–")+"</strong><em>View results ›</em></button></div><div class=\"row\"><span>Top finisher</span><span>"+esc(r.t)+"</span></div></div>"}).join("");
+document.getElementById("resbox").innerHTML=S.results.map(function(r,i){return '<div class="card"><h3>'+esc(r.meet)+'</h3><div class="d">'+esc(r.d)+'</div><div class="btns">'+(r.races||[]).map(function(x,j){return '<button class="rowb" data-i="'+i+'" data-r="'+j+'"><small>'+esc(x.name)+'</small><strong>'+esc(x.res||"–")+'</strong><em>View results ›</em></button>'}).join("")+'</div>'+(r.t?'<div class="row"><span>Top finisher</span><span>'+esc(r.t)+'</span></div>':'')+'</div>'}).join("");
 var pmr=prMap();document.getElementById("teambox").innerHTML=(S.team||[]).map(function(p){var e=effPR(p,pmr),meta=[p.grade,e.pr?"5K PR "+e.pr:""].filter(Boolean).join(" · ");return "<div class=\"ath\"><div class=\"av\">"+esc(ini(p.name||"?"))+"</div><strong>"+esc(p.name)+"</strong><br><small>"+esc(meta)+"</small>"+(e.src?"<br><small class=\"prsrc\">"+esc(e.src)+"</small>":"")+"</div>"}).join("")||"<p class=\"sub\">No team members yet.</p>";
 document.getElementById("athCount").textContent=(S.team||[]).length;
 drawHist();drawCourses();
@@ -300,13 +308,13 @@ function save(){if(!GH){say("Sign in first.");return}say("Saving…");
 q=q.then(function(){var txt=JSON.stringify({schedule:S.schedule,results:S.results,team:S.team,history:S.history,updated:S.updated,logo:S.logo},null,1);return ghPut("data.json",txt,false,"Update site data")}).then(function(){say("Saved. The live site updates in about a minute.")}).catch(function(e){say("Could not save: "+e.message)})}
 var curI=0;
 function showRace(i,k){curI=i;drawRace(k);document.getElementById("herov").style.display="none";document.getElementById("mainv").style.display="none";document.getElementById("racepage").style.display="block";window.scrollTo(0,0)}
-function drawRace(k){var r=S.results[curI];if(!r)return;var rows=(k==="v"?r.vi:r.ji)||[];
+function drawRace(k){var r=S.results[curI];if(!r)return;var rc=r.races||[];k=+k;if(!rc[k])k=0;var race=rc[k]||{name:"",rows:[]},rows=race.rows||[];
 document.getElementById("rpTitle").textContent=r.meet;
-document.getElementById("rpSub").textContent=r.d+" · Varsity "+(r.b||"–")+" · JV "+(r.j||"–");
-var dv=(k==="v"?r.vd:r.jd);document.getElementById("rpDist").style.display=dv?"inline-flex":"none";document.getElementById("rpDistVal").textContent=dv||"";
-document.querySelectorAll("#rpTabs button").forEach(function(b){b.classList.toggle("on",b.dataset.r===k)});
+document.getElementById("rpSub").textContent=r.d+rc.map(function(x){return " · "+x.name+" "+(x.res||"–")}).join("");
+document.getElementById("rpTabs").innerHTML=rc.map(function(x,j){return '<button data-r="'+j+'" class="'+(j===k?'on':'')+'">'+esc(x.name)+'</button>'}).join("");
+var dv=race.dist;document.getElementById("rpDist").style.display=dv?"inline-flex":"none";document.getElementById("rpDistVal").textContent=dv||"";
 var pmP=prMap(),flags=rows.map(function(x){return isPR(r,dv,x,pmP)}),anyPR=flags.some(Boolean);document.getElementById("rpPrTh").style.display=anyPR?"":"none";
-document.getElementById("rpBody").innerHTML=rows.length?rows.map(function(x,i){return "<tr><td><strong>"+esc(x[0])+"</strong></td>"+(anyPR?"<td class=\"prc\">"+(flags[i]?"<span class=\"prbox\">PR</span>":"")+"</td>":"")+"<td>"+esc(x[1])+"</td><td>"+esc(x[2])+"</td><td>"+esc(x[3])+"</td></tr>"}).join(""):"<tr><td colspan=5>Individual results have not been posted yet.</td></tr>";
+document.getElementById("rpBody").innerHTML=rows.length?rows.map(function(x,i){return '<tr><td><strong>'+esc(x[0])+'</strong></td>'+(anyPR?'<td class="prc">'+(flags[i]?'<span class="prbox">PR</span>':'')+'</td>':'')+'<td>'+esc(x[1])+'</td><td>'+esc(x[2])+'</td><td>'+esc(x[3])+'</td></tr>'}).join(""):'<tr><td colspan=5>Individual results have not been posted yet.</td></tr>';
 }
 function hideRace(){document.getElementById("herov").style.display="";document.getElementById("mainv").style.display="";document.getElementById("racepage").style.display="none"}
 document.getElementById("resbox").addEventListener("click",function(e){var b=e.target.closest(".rowb");if(!b)return;showRace(+b.dataset.i,b.dataset.r)});
@@ -314,18 +322,29 @@ document.getElementById("rpTabs").addEventListener("click",function(e){var b=e.t
 document.getElementById("backBtn").onclick=function(){hideRace();var el=document.getElementById("results");if(el)el.scrollIntoView()};
 document.querySelectorAll("nav a").forEach(function(a){a.addEventListener("click",hideRace)});
 function fillIm(){var im=document.getElementById("im"),cur=im.value;im.innerHTML=S.results.map(function(r,i){return "<option value=\""+i+"\">"+esc(r.meet)+"</option>"}).join("");if(cur&&+cur<S.results.length)im.value=cur}
-function loadInd(){var r=S.results[+document.getElementById("im").value];if(!r)return;document.getElementById("il").value=((document.getElementById("ir").value==="v"?r.vi:r.ji)||[]).map(function(x){return x.join(", ")}).join("\n")}
-var _r=render;render=function(){_r();if(canEdit)fillIm()};
+function fillIr(){var r=S.results[+document.getElementById("im").value],ir=document.getElementById("ir"),cur=ir.value,rc=(r&&r.races)||[];ir.innerHTML=rc.map(function(x,j){return '<option value="'+j+'">'+esc(x.name)+'</option>'}).join("");if(cur&&+cur<rc.length)ir.value=cur}
+function loadInd(){fillIr();var r=S.results[+document.getElementById("im").value],x=r&&r.races&&r.races[+document.getElementById("ir").value];if(!x){document.getElementById("il").value="";return}document.getElementById("il").value=(x.rows||[]).map(function(y){return y.join(", ")}).join("\n")}
+var _r=render;render=function(){_r();if(canEdit){fillIm();fillIr()}};
 document.getElementById("im").onchange=loadInd;document.getElementById("ir").onchange=loadInd;
 document.getElementById("saveInd").onclick=function(){var r=S.results[+document.getElementById("im").value];if(!r){say("Add a result for this meet first.");return}
 var rows=document.getElementById("il").value.split("\n").map(function(l){return l.trim()}).filter(Boolean).map(function(l){var p=l.split(",").map(function(x){return x.trim()});return [p[0]||"",p[1]||"",p[2]||"",p[3]||""]});
-if(document.getElementById("ir").value==="v")r.vi=rows;else r.ji=rows;render();save("results")};
+var x=r.races[+document.getElementById("ir").value];if(!x){say("Pick a race first.");return}x.rows=rows;render();save("results")};
 document.getElementById("tabs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;this.querySelectorAll("button").forEach(function(x){x.classList.remove("on")});b.classList.add("on");filter=b.dataset.f;render()});
+var formRaces=[{name:"Varsity",res:"",dist:"",rows:[]},{name:"JV",res:"",dist:"",rows:[]}];
+function attr(v){return esc(v).replace(/"/g,"&quot;")}
+function drawRaceRows(){document.getElementById("raceRows").innerHTML=formRaces.map(function(x,i){return '<div class="form" style="margin-bottom:8px"><div><label>Race name</label><input data-f="name" data-i="'+i+'" value="'+attr(x.name)+'"></div><div><label>Team result</label><input data-f="res" data-i="'+i+'" value="'+attr(x.res)+'" placeholder="1st · 38 pts"></div><div><label>Distance</label><input data-f="dist" data-i="'+i+'" value="'+attr(x.dist)+'" placeholder="5K"></div><div><button class="hx" data-k="rrm" data-i="'+i+'">Remove race</button></div></div>'}).join("")}
+document.getElementById("raceRows").addEventListener("input",function(e){var t=e.target;if(t.dataset.f===undefined)return;formRaces[+t.dataset.i][t.dataset.f]=t.value});
+document.getElementById("raceRows").addEventListener("click",function(e){var b=e.target.closest("[data-k]");if(!b||b.dataset.k!=="rrm")return;var i=+b.dataset.i;
+if(formRaces.length<2){say("A meet needs at least one race.");return}
+if((formRaces[i].rows||[]).length&&!confirm("Remove this race and its individual results?"))return;formRaces.splice(i,1);drawRaceRows()});
+document.getElementById("addRace").onclick=function(){formRaces.push({name:"Race "+(formRaces.length+1),res:"",dist:"",rows:[]});drawRaceRows()};
+drawRaceRows();
 var editIdx=-1;
-function cancelEdit(){editIdx=-1;["rm","rd","rb","rj","rt","rvd","rjd"].forEach(function(id){document.getElementById(id).value=""});document.getElementById("addRes").textContent="Add result";document.getElementById("cancelRes").style.display="none"}
-function editRes(i){var r=S.results[i];if(!r)return;editIdx=i;document.getElementById("rm").value=r.meet||"";document.getElementById("rd").value=r.d||"";document.getElementById("rb").value=r.b||"";document.getElementById("rj").value=r.j||"";document.getElementById("rt").value=r.t||"";document.getElementById("rvd").value=r.vd||"";document.getElementById("rjd").value=r.jd||"";
+function cancelEdit(){editIdx=-1;["rm","rd","rt"].forEach(function(id){document.getElementById(id).value=""});formRaces=[{name:"Varsity",res:"",dist:"",rows:[]},{name:"JV",res:"",dist:"",rows:[]}];drawRaceRows();document.getElementById("addRes").textContent="Add result";document.getElementById("cancelRes").style.display="none"}
+function editRes(i){var r=S.results[i];if(!r)return;editIdx=i;document.getElementById("rm").value=r.meet||"";document.getElementById("rd").value=r.d||"";document.getElementById("rt").value=r.t||"";
+formRaces=(r.races||[]).map(function(x){return {name:x.name,res:x.res||"",dist:x.dist||"",rows:x.rows||[]}});if(!formRaces.length)formRaces=[{name:"Varsity",res:"",dist:"",rows:[]}];drawRaceRows();
 document.getElementById("addRes").textContent="Save changes";document.getElementById("cancelRes").style.display="";document.getElementById("rm").scrollIntoView({block:"center"});document.getElementById("rm").focus()}
-function raceRes(i){document.getElementById("im").value=String(i);document.getElementById("ir").value="v";loadInd();document.getElementById("il").scrollIntoView({block:"center"});document.getElementById("il").focus()}
+function raceRes(i){document.getElementById("im").value=String(i);document.getElementById("ir").value="0";loadInd();document.getElementById("il").scrollIntoView({block:"center"});document.getElementById("il").focus()}
 document.getElementById("cancelRes").onclick=cancelEdit;
 function yrs(v){var a=String(v).split(/[ ,]+/).map(Number).filter(function(n){return n>1900&&n<2200});return a}
 function fillHist(){var h=S.history||{},r=h.record||{};document.getElementById("rw").value=r.wins===undefined?"":r.wins;document.getElementById("rl").value=r.losses===undefined?"":r.losses;document.getElementById("ry").value=r.since||"";document.getElementById("hq").value=h.quote||"";document.getElementById("hb").value=h.by||""}
@@ -405,8 +424,9 @@ var vt=document.getElementById("st").value,o={date:d,time:vt,jv:document.getElem
 if(editM>=0&&S.schedule[editM]){S.schedule[editM]=o}else{S.schedule.push(o)}
 cancelMeetEdit();render();save("schedule")};
 document.getElementById("addRes").onclick=function(){if(!rm.value.trim()){say("Add a meet name.");return}
-var o={meet:rm.value.trim(),d:rd.value.trim(),b:rb.value.trim(),j:rj.value.trim(),t:rt.value.trim(),vd:document.getElementById("rvd").value.trim(),jd:document.getElementById("rjd").value.trim()};
-if(editIdx>=0&&S.results[editIdx]){var c=S.results[editIdx];c.meet=o.meet;c.d=o.d;c.b=o.b;c.j=o.j;c.t=o.t;c.vd=o.vd;c.jd=o.jd}else{o.vi=[];o.ji=[];S.results.unshift(o)}
+var races=formRaces.map(function(x){return {name:(x.name||"").trim()||"Race",res:(x.res||"").trim(),dist:(x.dist||"").trim(),rows:x.rows||[]}});
+var o={meet:rm.value.trim(),d:rd.value.trim(),t:rt.value.trim(),races:races};
+if(editIdx>=0&&S.results[editIdx]){var c=S.results[editIdx];c.meet=o.meet;c.d=o.d;c.t=o.t;c.races=o.races}else{S.results.unshift(o)}
 cancelEdit();render();save("results")};
 document.getElementById("admin").addEventListener("click",function(e){var b=e.target.closest(".x");if(!b)return;
 if(b.dataset.k==="te"){editPerson(+b.dataset.i)}else if(b.dataset.k==="se"){editMeet(+b.dataset.i)}else if(b.dataset.k==="re"){editRes(+b.dataset.i)}else if(b.dataset.k==="ri"){raceRes(+b.dataset.i)}else if(b.dataset.k==="t"){S.team.splice(+b.dataset.i,1);cancelTeamEdit();render();save()}else if(b.dataset.k==="s"){S.schedule.splice(+b.dataset.i,1);cancelMeetEdit();render();save("schedule")}else{S.results.splice(+b.dataset.i,1);cancelEdit();render();save("results")}});
@@ -414,8 +434,8 @@ document.getElementById("logoFile").onchange=function(){var f=this.files[0];if(!
 var ext=(f.name.split(".").pop()||"png").toLowerCase().replace(/[^a-z0-9]/g,"");say("Uploading logo…");
 var fr=new FileReader();fr.onload=function(){var data=fr.result;S._lp=data;
 q=q.then(function(){return ghPut("logo."+ext,data.split(",")[1],true,"Update logo")}).then(function(){S.logo="logo."+ext+"?v="+Date.now();render();save()}).catch(function(e){say("Upload failed: "+e.message)})};fr.readAsDataURL(f)};
-S.history=normHist(S.history);render();tick();setInterval(tick,1000);
-fetch("data.json?v="+Date.now()).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d)return;if(Array.isArray(d.schedule))S.schedule=d.schedule;if(Array.isArray(d.results))S.results=d.results;if(Array.isArray(d.team))S.team=d.team;if(typeof d.updated==="string")S.updated=d.updated;if(d.history&&typeof d.history==="object"){var rec0=S.history&&S.history.record;S.history=normHist(d.history);if(d.history.record===undefined)S.history.record=rec0||null}S.logo=d.logo||null;render();tick()}).catch(function(){});
+S.history=normHist(S.history);normAll();render();tick();setInterval(tick,1000);
+fetch("data.json?v="+Date.now()).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d)return;if(Array.isArray(d.schedule))S.schedule=d.schedule;if(Array.isArray(d.results)){S.results=d.results;normAll()}if(Array.isArray(d.team))S.team=d.team;if(typeof d.updated==="string")S.updated=d.updated;if(d.history&&typeof d.history==="object"){var rec0=S.history&&S.history.record;S.history=normHist(d.history);if(d.history.record===undefined)S.history.record=rec0||null}S.logo=d.logo||null;render();tick()}).catch(function(){});
 fetch("records.json?v="+Date.now()).then(function(r){return r.ok?r.json():null}).then(function(d){if(d&&Array.isArray(d.courses)){R=d;render()}}).catch(function(){});
 (function(){var h=location.hostname,p=location.pathname.split("/")[1],g="";
 if(/\.github\.io$/.test(h)){g=h.split(".")[0]+"/"+(p||h)}
