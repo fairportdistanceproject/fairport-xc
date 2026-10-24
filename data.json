@@ -1028,7 +1028,7 @@
    "t": "P. Rinefierd",
    "races": [
     {
-     "name": "Varsity",
+     "name": "Varsity Boys",
      "res": "5th 116 pts",
      "dist": "5K",
      "rows": [
@@ -1173,7 +1173,7 @@
      ]
     },
     {
-     "name": "JV",
+     "name": "JV Boys",
      "res": "None",
      "dist": "",
      "rows": []
