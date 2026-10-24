@@ -95,18 +95,18 @@
  "results": [
   {
    "meet": "Royal Cadet Invitational",
-   "d": "Oct 24 • Jr-Sr race (varsity results) & Fr-So race (JV results)",
-   "t": "",
+   "d": "Oct 24",
+   "t": "H. Ruder 10:25.4",
    "races": [
     {
-     "name": "Varsity",
-     "res": "",
+     "name": "Junior • Senior",
+     "res": "5th • 172 pts",
      "dist": "2 mile",
      "rows": []
     },
     {
-     "name": "JV",
-     "res": "",
+     "name": "Freshman • Sophomore",
+     "res": "2nd • 69 pts",
      "dist": "2 mile",
      "rows": []
     }
