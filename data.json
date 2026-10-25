@@ -2011,10 +2011,10 @@
  },
  "updated": "2026-10-25",
  "announce": {
-  "on": false,
-  "text": "",
-  "link": "",
-  "label": "",
+  "on": true,
+  "text": "Click the link for the Monroe County Championship Meet Information",
+  "link": "https://www.mcxcresults.com/mcxcws/matt/mcxcws26/monroe_county_xc_championship_2026.pdf",
+  "label": "Monroe County Championship Information",
   "until": ""
  },
  "logo": "logo.jpg?v=1792288046582"
