@@ -62,6 +62,7 @@ footer .tl a{color:inherit;text-decoration:underline;text-underline-offset:2px}f
 .prsrc{font-size:.7rem;opacity:.75}
 .prc{text-align:center;width:64px}.prc .prbox{margin-left:0}
 .prbox{display:inline-block;background:var(--red);color:#fff;font-size:.66rem;font-weight:700;letter-spacing:.06em;padding:1px 7px;border-radius:4px;margin-left:8px;vertical-align:middle}
+.sc-line{white-space:nowrap;font-variant-numeric:tabular-nums;padding:1px 0}.sc-tag.c0{background:#1f7a8c}.sc-tag.c1{background:#6b4fa3}.sc-tag.c2{background:#a8641a}.sc-tag.c3{background:#2e7d5a}
 .foot{background:none;border:1px solid rgba(255,255,255,.3);color:inherit;opacity:.6;font:inherit;font-size:.72rem;padding:3px 10px;border-radius:99px;cursor:pointer}.foot:hover{opacity:1}
 .team{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
 .ath{background:var(--surface);border:1px solid var(--line);border-top:3px solid var(--red);border-radius:12px;padding:18px;text-align:center}
@@ -139,7 +140,7 @@ footer span{opacity:.7}
 <section id="schedule">
 <h2>Schedule</h2><p class="sub">Meets, invitationals and championships.</p>
 <div class="bar"><div class="tabs" id="tabs"><button class="on" data-f="all">All</button><button data-f="up">Upcoming</button><button data-f="done">Completed</button></div><div class="tabs" id="layoutTabs"><button class="on" data-l="cards">Cards</button><button data-l="table">Table</button></div></div>
-<div class="tbl" id="schedtbl" style="display:none"><table><thead><tr><th>Date</th><th>JV race</th><th>Varsity race</th><th>Meet</th><th>Location</th><th>Status</th></tr></thead><tbody id="sched"></tbody></table></div>
+<div class="tbl" id="schedtbl" style="display:none"><table><thead><tr><th>Date</th><th>Start times</th><th>Meet</th><th>Location</th><th>Status</th></tr></thead><tbody id="sched"></tbody></table></div>
 <div class="sc-cards" id="schedcards"></div>
 </section>
 
@@ -194,8 +195,11 @@ footer span{opacity:.7}
 <div style="margin-top:10px"><button class="btn s" id="saveCr">Save course records</button> <button class="btn s g" id="delList">Remove this list</button> <button class="btn s g" id="delCourse">Remove this course</button></div>
 <div class="form" style="margin-top:12px"><div><label>New course name</label><input id="ncn" placeholder="Letchworth"></div><div><button class="btn s" id="addCourse">Add course</button></div><div><label>New list for this course</label><input id="nln" placeholder="12th grade"></div><div><button class="btn s" id="addList">Add list</button></div></div>
 <h3>Add a meet</h3>
-<div class="form"><div><label>Date</label><input type="date" id="sd"></div><div><label>JV start</label><input type="time" id="sj"></div><div><label>Varsity start</label><input type="time" id="st"></div><div><label>Meet</label><input id="sm"></div><div><label>Location</label><input id="sl"></div><div><button class="btn s" id="addMeet">Add meet</button> <button class="btn s g" id="cancelMeet" style="display:none">Cancel</button></div></div>
-<label class="chk"><input type="checkbox" id="ss"> Both races start at the same time</label>
+<div class="form"><div><label>Date</label><input type="date" id="sd"></div><div><label>Meet</label><input id="sm"></div><div><label>Location</label><input id="sl"></div></div>
+<div class="note" style="margin:10px 0 6px">Start times. Rename a race, add more, or remove one if there is no such race at this meet.</div>
+<div id="timeRows"></div>
+<div style="margin-top:6px"><button class="btn s g" id="addTime">Add another start time</button></div>
+<div style="margin-top:12px"><button class="btn s" id="addMeet">Add meet</button> <button class="btn s g" id="cancelMeet" style="display:none">Cancel</button></div>
 <div class="list" id="aList"></div>
 <h3>Add a result</h3>
 <div class="form"><div><label>Meet</label><input id="rm"></div><div><label>Date and placement</label><input id="rd" placeholder="Oct 10 · Team: 1st of 14"></div><div><label>Top finisher</label><input id="rt" placeholder="A. Rivera · 16:42"></div></div>
@@ -245,8 +249,8 @@ var filter="all",canEdit=false,db=null;
 function esc(s){var e=document.createElement("div");e.textContent=s==null?"":String(s);return e.innerHTML}
 function fmt(s){return new Date(s+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}
 function ft(t){if(!t)return "";var p=String(t).split(":"),h=+p[0],ap=h>=12?"PM":"AM";h=h%12||12;return h+":"+p[1]+" "+ap}
-function cut(m){var ts=[m.jv,m.time].filter(Boolean).sort(),c=new Date(m.date+"T17:30:00");
-if(ts.length){var l=new Date(new Date(m.date+"T"+ts[ts.length-1]+":00").getTime()+90*6e4);if(l>c)c=l}return c}
+function cut(m){var rs=mraces(m),c=new Date(m.date+"T17:30:00");
+if(rs.length){var l=new Date(new Date(m.date+"T"+rs[rs.length-1].time+":00").getTime()+90*6e4);if(l>c)c=l}return c}
 function isUp(m){return cut(m)>=new Date()}
 var lastKey=null;
 function sorted(){return S.schedule.slice().sort(function(a,b){return a.date<b.date?-1:1})}
@@ -260,7 +264,7 @@ var b=pm[n];return !!b&&b.meet===r.meet&&tsec(b.t)===tsec(x[3])}
 function normRes(r){if(Array.isArray(r.races))return r;
 r.races=[{name:"Varsity",res:r.b||"",dist:r.vd||"",rows:r.vi||[]},{name:"JV",res:r.j||"",dist:r.jd||"",rows:r.ji||[]}];
 delete r.b;delete r.j;delete r.vd;delete r.jd;delete r.vi;delete r.ji;return r}
-function normAll(){S.results=(S.results||[]).map(normRes)}
+function normAll(){S.results=(S.results||[]).map(normRes);S.schedule=(S.schedule||[]).map(normMeet)}
 function ini(n){return String(n).trim().split(/\s+/).map(function(w){return w[0]}).slice(0,2).join("").toUpperCase()}
 function chips(a){return (a||[]).map(function(y){return "<span class=\"chip\">"+esc(y)+"</span>"}).join("")}
 function normHist(h){h=h||{};if(Array.isArray(h.groups))return {groups:h.groups,quote:h.quote||"",by:h.by||"",record:h.record||null};
@@ -272,16 +276,19 @@ document.getElementById("histbox").innerHTML=(h.groups||[]).map(function(g){var 
 var q=document.getElementById("quote");q.innerHTML=h.quote?"“"+esc(h.quote)+"”"+(h.by?"<cite>— "+esc(h.by)+"</cite>":""):"";q.style.display=h.quote?"block":"none"}
 function drawHistAdmin(){var h=S.history||{groups:[]};document.getElementById("hgList").innerHTML=(h.groups||[]).map(function(g,i){return '<div class="hg"><div class="hgh"><input data-gt="'+i+'" value="'+esc(g.title).replace(/"/g,"&quot;")+'"><button class="hx" data-k="hgr" data-i="'+i+'">Remove group</button></div><div class="chips">'+(g.years||[]).map(function(y){return '<span class="chip">'+esc(y)+' <button class="hx" data-k="hy" data-i="'+i+'" data-y="'+esc(y)+'" title="Remove year">✕</button></span>'}).join("")+'</div><div class="form" style="margin-top:10px"><div><input data-gy="'+i+'" placeholder="Add a year, like 2025"></div><div><button class="btn s" data-k="hya" data-i="'+i+'">Add year</button></div></div></div>'}).join("")}
 var layoutS="cards";
-function rtime(m,k){var t=k==="j"?m.jv:m.time;if(!t)return '<span class="sc-none">–</span>';return ft(t)+((m.jv&&m.time&&m.jv===m.time)?' <span class="sc-none">(same time)</span>':'')}
-function rlab(m){if(m.jv&&m.time&&m.jv===m.time)return " at "+ft(m.time);var a=[];if(m.jv)a.push("JV "+ft(m.jv));if(m.time)a.push("Varsity "+ft(m.time));return a.length?" · "+a.join(" · "):""}
-function ft0(m){var a=[m.jv,m.time].filter(Boolean).sort();return a[0]||"09:00"}
-function card(m,up){var dd=new Date(m.date+"T12:00:00"),rs=[];if(m.jv)rs.push(["JV",m.jv,"j"]);if(m.time)rs.push(["Varsity",m.time,"v"]);rs.sort(function(a,b){return a[1]<b[1]?-1:a[1]>b[1]?1:0});
-return '<div class="sc-mc'+(up?' up':'')+'"><div class="sc-dt"><b>'+dd.getDate()+'</b><span>'+dd.toLocaleDateString("en-US",{month:"short"})+'</span></div><div style="flex:1"><h3>'+esc(m.meet)+'</h3><div class="sc-loc">'+esc(m.loc)+'</div>'+(rs.map(function(r){return '<div class="sc-race"><span><span class="sc-tag '+r[2]+'">'+r[0]+'</span></span><b>'+ft(r[1])+'</b></div>'}).join("")||'<div class="sc-race sc-none"><span>Time to be announced</span></div>')+((m.jv&&m.time&&m.jv===m.time)?'<div class="sc-race sc-none"><span>Both races start together</span></div>':'')+'</div></div>'}
+function mraces(m){return (m.races||[]).filter(function(x){return x.time}).slice().sort(function(a,b){return a.time<b.time?-1:a.time>b.time?1:0})}
+function tcls(n,i){var l=String(n||"").trim().toLowerCase();return l==="jv"?"j":l==="varsity"?"v":"c"+(i%4)}
+function rtimes(m){var rs=mraces(m);return rs.length?rs.map(function(r,i){return '<div class="sc-line"><span class="sc-tag '+tcls(r.name,i)+'">'+esc(r.name)+'</span> '+ft(r.time)+'</div>'}).join(""):'<span class="sc-none">–</span>'}
+function rlab(m){var rs=mraces(m);if(!rs.length)return "";if(rs.length>1&&rs.every(function(r){return r.time===rs[0].time}))return " at "+ft(rs[0].time);return " · "+rs.map(function(r){return r.name+" "+ft(r.time)}).join(" · ")}
+function ft0(m){var rs=mraces(m);return rs.length?rs[0].time:"09:00"}
+function normMeet(m){if(Array.isArray(m.races))return m;var r=[];if(m.jv)r.push({name:"JV",time:m.jv});if(m.time)r.push({name:"Varsity",time:m.time});m.races=r;delete m.jv;delete m.time;return m}
+function card(m,up){var dd=new Date(m.date+"T12:00:00"),rs=mraces(m);
+return '<div class="sc-mc'+(up?' up':'')+'"><div class="sc-dt"><b>'+dd.getDate()+'</b><span>'+dd.toLocaleDateString("en-US",{month:"short"})+'</span></div><div style="flex:1"><h3>'+esc(m.meet)+'</h3><div class="sc-loc">'+esc(m.loc)+'</div>'+(rs.map(function(r,i){return '<div class="sc-race"><span><span class="sc-tag '+tcls(r.name,i)+'">'+esc(r.name)+'</span></span><b>'+ft(r.time)+'</b></div>'}).join("")||'<div class="sc-race sc-none"><span>Time to be announced</span></div>')+((rs.length>1&&rs.every(function(r){return r.time===rs[0].time}))?'<div class="sc-race sc-none"><span>All races start together</span></div>':'')+'</div></div>'}
 document.getElementById("layoutTabs").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;this.querySelectorAll("button").forEach(function(x){x.classList.toggle("on",x===b)});layoutS=b.dataset.l;render()});
 function render(){
 var rows="",cards="";sorted().forEach(function(m){var up=isUp(m);if(filter==="up"&&!up)return;if(filter==="done"&&up)return;
-rows+="<tr><td><strong>"+fmt(m.date)+"</strong></td><td class=\"sc-t\">"+rtime(m,"j")+"</td><td class=\"sc-t\">"+rtime(m,"v")+"</td><td>"+esc(m.meet)+"</td><td>"+esc(m.loc)+"</td><td><span class=\"tag "+(up?"up":"")+"\">"+(up?"Upcoming":"Final")+"</span></td></tr>";cards+=card(m,up)});
-document.getElementById("sched").innerHTML=rows||"<tr><td colspan=6>No meets to show.</td></tr>";
+rows+="<tr><td><strong>"+fmt(m.date)+"</strong></td><td class=\"sc-t\">"+rtimes(m)+"</td><td>"+esc(m.meet)+"</td><td>"+esc(m.loc)+"</td><td><span class=\"tag "+(up?"up":"")+"\">"+(up?"Upcoming":"Final")+"</span></td></tr>";cards+=card(m,up)});
+document.getElementById("sched").innerHTML=rows||"<tr><td colspan=5>No meets to show.</td></tr>";
 document.getElementById("schedcards").innerHTML=cards||'<p class="sub">No meets to show.</p>';
 document.getElementById("schedtbl").style.display=layoutS==="table"?"":"none";document.getElementById("schedcards").style.display=layoutS==="cards"?"":"none";
 document.getElementById("resbox").innerHTML=S.results.map(function(r,i){return '<div class="card"><h3>'+esc(r.meet)+'</h3><div class="d">'+esc(r.d)+'</div><div class="btns">'+(r.races||[]).map(function(x,j){return '<button class="rowb" data-i="'+i+'" data-r="'+j+'"><small>'+esc(x.name)+'</small><strong>'+esc(x.res||"–")+'</strong><em>View results ›</em></button>'}).join("")+'</div>'+(r.t?'<div class="row"><span>Top finisher</span><span>'+esc(r.t)+'</span></div>':'')+'</div>'}).join("");
@@ -361,12 +368,18 @@ document.getElementById("hgList").addEventListener("change",function(e){var t=e.
 document.getElementById("addGroup").onclick=function(){var n=document.getElementById("hgn").value.trim();if(!n){say("Enter a group name.");return}S.history.groups.push({title:n,years:[]});document.getElementById("hgn").value="";render();save()};
 document.getElementById("saveRec").onclick=function(){S.history.record={wins:+document.getElementById("rw").value||0,losses:+document.getElementById("rl").value||0,since:+document.getElementById("ry").value||""};render();save()};
 document.getElementById("saveQuote").onclick=function(){S.history.quote=document.getElementById("hq").value.trim();S.history.by=document.getElementById("hb").value.trim();render();save()};
+var formTimes=[{name:"JV",time:""},{name:"Varsity",time:""}];
+function drawTimeRows(){document.getElementById("timeRows").innerHTML=formTimes.map(function(x,i){return '<div class="form" style="margin-bottom:8px"><div><label>Race</label><input data-f="name" data-i="'+i+'" value="'+attr(x.name)+'"></div><div><label>Start time</label><input type="time" data-f="time" data-i="'+i+'" value="'+attr(x.time)+'"></div><div><button class="hx" data-k="trm" data-i="'+i+'">Remove</button></div></div>'}).join("")}
+document.getElementById("timeRows").addEventListener("input",function(e){var t=e.target;if(t.dataset.f===undefined)return;formTimes[+t.dataset.i][t.dataset.f]=t.value});
+document.getElementById("timeRows").addEventListener("click",function(e){var b=e.target.closest("[data-k]");if(!b||b.dataset.k!=="trm")return;formTimes.splice(+b.dataset.i,1);drawTimeRows()});
+document.getElementById("addTime").onclick=function(){formTimes.push({name:"Race "+(formTimes.length+1),time:""});drawTimeRows()};
+drawTimeRows();
 var editM=-1;
-function cancelMeetEdit(){editM=-1;["sd","sj","st","sm","sl"].forEach(function(id){document.getElementById(id).value=""});document.getElementById("ss").checked=false;document.getElementById("sj").disabled=false;document.getElementById("addMeet").textContent="Add meet";document.getElementById("cancelMeet").style.display="none"}
-function editMeet(i){var m=S.schedule[i];if(!m)return;editM=i;document.getElementById("sd").value=m.date||"";document.getElementById("st").value=m.time||"";document.getElementById("sj").value=m.jv||"";var sm0=!!(m.jv&&m.time&&m.jv===m.time);document.getElementById("ss").checked=sm0;document.getElementById("sj").disabled=sm0;document.getElementById("sm").value=m.meet||"";document.getElementById("sl").value=m.loc||"";document.getElementById("addMeet").textContent="Save changes";document.getElementById("cancelMeet").style.display="";document.getElementById("sm").scrollIntoView({block:"center"});document.getElementById("sm").focus()}
+function cancelMeetEdit(){editM=-1;["sd","sm","sl"].forEach(function(id){document.getElementById(id).value=""});formTimes=[{name:"JV",time:""},{name:"Varsity",time:""}];drawTimeRows();document.getElementById("addMeet").textContent="Add meet";document.getElementById("cancelMeet").style.display="none"}
+function editMeet(i){var m=S.schedule[i];if(!m)return;editM=i;document.getElementById("sd").value=m.date||"";document.getElementById("sm").value=m.meet||"";document.getElementById("sl").value=m.loc||"";
+formTimes=(m.races||[]).map(function(x){return {name:x.name,time:x.time||""}});if(!formTimes.length)formTimes=[{name:"JV",time:""},{name:"Varsity",time:""}];drawTimeRows();
+document.getElementById("addMeet").textContent="Save changes";document.getElementById("cancelMeet").style.display="";document.getElementById("sm").scrollIntoView({block:"center"});document.getElementById("sm").focus()}
 document.getElementById("cancelMeet").onclick=cancelMeetEdit;
-function syncSame(){var c=document.getElementById("ss").checked,j=document.getElementById("sj");if(c){j.value=document.getElementById("st").value;j.disabled=true}else j.disabled=false}
-document.getElementById("ss").onchange=syncSame;document.getElementById("st").addEventListener("input",function(){if(document.getElementById("ss").checked)syncSame()});
 var crI=0,crL=0,crAll=false;
 function drawCourses(){var box=document.getElementById("courses"),cs=R.courses||[];if(!cs.length){box.style.display="none";return}box.style.display="block";
 if(crI>=cs.length)crI=0;var c=cs[crI];if(crL>=c.lists.length)crL=0;
@@ -423,7 +436,7 @@ S.team=S.team||[];var p={name:n,grade:document.getElementById("tg").value.trim()
 if(editT>=0&&S.team[editT]){S.team[editT]=p}else{S.team.push(p)}
 cancelTeamEdit();render();save()};
 document.getElementById("addMeet").onclick=function(){var d=sd.value,m=sm.value.trim();if(!d||!m){say("Add a date and meet name.");return}
-var vt=document.getElementById("st").value,o={date:d,time:vt,jv:document.getElementById("ss").checked?vt:document.getElementById("sj").value,meet:m,loc:sl.value.trim()};
+var rs=formTimes.map(function(x){return {name:(x.name||"").trim()||"Race",time:x.time||""}}).filter(function(x){return x.time}),o={date:d,meet:m,loc:sl.value.trim(),races:rs};
 if(editM>=0&&S.schedule[editM]){S.schedule[editM]=o}else{S.schedule.push(o)}
 cancelMeetEdit();render();save("schedule")};
 document.getElementById("addRes").onclick=function(){if(!rm.value.trim()){say("Add a meet name.");return}
@@ -438,7 +451,7 @@ var ext=(f.name.split(".").pop()||"png").toLowerCase().replace(/[^a-z0-9]/g,"");
 var fr=new FileReader();fr.onload=function(){var data=fr.result;S._lp=data;
 q=q.then(function(){return ghPut("logo."+ext,data.split(",")[1],true,"Update logo")}).then(function(){S.logo="logo."+ext+"?v="+Date.now();render();save()}).catch(function(e){say("Upload failed: "+e.message)})};fr.readAsDataURL(f)};
 S.history=normHist(S.history);normAll();render();tick();setInterval(tick,1000);
-fetch("data.json?v="+Date.now()).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d)return;if(Array.isArray(d.schedule))S.schedule=d.schedule;if(Array.isArray(d.results)){S.results=d.results;normAll()}if(Array.isArray(d.team))S.team=d.team;if(typeof d.updated==="string")S.updated=d.updated;if(d.history&&typeof d.history==="object"){var rec0=S.history&&S.history.record;S.history=normHist(d.history);if(d.history.record===undefined)S.history.record=rec0||null}S.logo=d.logo||null;render();tick()}).catch(function(){});
+fetch("data.json?v="+Date.now()).then(function(r){return r.ok?r.json():null}).then(function(d){if(!d)return;if(Array.isArray(d.schedule)){S.schedule=d.schedule;normAll()}if(Array.isArray(d.results)){S.results=d.results;normAll()}if(Array.isArray(d.team))S.team=d.team;if(typeof d.updated==="string")S.updated=d.updated;if(d.history&&typeof d.history==="object"){var rec0=S.history&&S.history.record;S.history=normHist(d.history);if(d.history.record===undefined)S.history.record=rec0||null}S.logo=d.logo||null;render();tick()}).catch(function(){});
 fetch("records.json?v="+Date.now()).then(function(r){return r.ok?r.json():null}).then(function(d){if(d&&Array.isArray(d.courses)){R=d;render()}}).catch(function(){});
 (function(){var h=location.hostname,p=location.pathname.split("/")[1],g="";
 if(/\.github\.io$/.test(h)){g=h.split(".")[0]+"/"+(p||h)}
