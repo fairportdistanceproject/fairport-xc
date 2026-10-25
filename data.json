@@ -1986,7 +1986,7 @@
  },
  "updated": "2026-10-24",
  "announce": {
-  "on": false,
+  "on": true,
   "text": "test",
   "link": "",
   "label": "",
