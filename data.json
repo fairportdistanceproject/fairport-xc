@@ -182,11 +182,7 @@
    "loc": "Bowdoin Park",
    "races": [
     {
-     "name": "JV",
-     "time": "09:00"
-    },
-    {
-     "name": "Varsity",
+     "name": "Open Race",
      "time": "09:00"
     }
    ]
