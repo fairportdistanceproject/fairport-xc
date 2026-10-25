@@ -1986,10 +1986,10 @@
  },
  "updated": "2026-10-24",
  "announce": {
-  "on": false,
-  "text": "",
-  "link": "",
-  "label": "",
+  "on": true,
+  "text": "Great racing from all of our runners at the Royal Cadet Invitational. We will be returning this Saturday for the County Championship at Parma Park!",
+  "link": "https://www.mcxcresults.com/mcxcws/matt/mcxcws26/monroe_county_xc_championship_2026.pdf",
+  "label": "Monroe County Championship Information",
   "until": ""
  },
  "logo": "logo.jpg?v=1792288046582"
