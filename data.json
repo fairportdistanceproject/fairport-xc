@@ -2,94 +2,194 @@
  "schedule": [
   {
    "date": "2026-09-04",
-   "time": "10:45",
-   "jv": "10:45",
    "meet": "8th Annual St. John Fisher Rodenbeck Invitational",
-   "loc": "St. John Fisher University"
+   "loc": "St. John Fisher University",
+   "races": [
+    {
+     "name": "JV",
+     "time": "10:45"
+    },
+    {
+     "name": "Varsity",
+     "time": "10:45"
+    }
+   ]
   },
   {
    "date": "2026-09-15",
-   "time": "17:00",
-   "jv": "17:00",
    "meet": "League Meet #1",
-   "loc": "Northampton Park"
+   "loc": "Northampton Park",
+   "races": [
+    {
+     "name": "JV",
+     "time": "17:00"
+    },
+    {
+     "name": "Varsity",
+     "time": "17:00"
+    }
+   ]
   },
   {
    "date": "2026-09-19",
-   "time": "09:00",
-   "jv": "09:00",
    "meet": "ESM Invitational",
-   "loc": "Pine Grove Jr. High School"
+   "loc": "Pine Grove Jr. High School",
+   "races": [
+    {
+     "name": "JV",
+     "time": "09:00"
+    },
+    {
+     "name": "Varsity",
+     "time": "09:00"
+    }
+   ]
   },
   {
    "date": "2026-09-22",
-   "time": "17:00",
-   "jv": "17:00",
    "meet": "League Meet #2",
-   "loc": "Shadow Pines Park"
+   "loc": "Shadow Pines Park",
+   "races": [
+    {
+     "name": "JV",
+     "time": "17:00"
+    },
+    {
+     "name": "Varsity",
+     "time": "17:00"
+    }
+   ]
   },
   {
    "date": "2026-10-03",
-   "time": "16:20",
-   "jv": "15:56",
    "meet": "61st McQuaid Invitational",
-   "loc": "Genesee Valley Park"
+   "loc": "Genesee Valley Park",
+   "races": [
+    {
+     "name": "JV",
+     "time": "15:56"
+    },
+    {
+     "name": "Varsity",
+     "time": "16:20"
+    }
+   ]
   },
   {
    "date": "2026-10-10",
-   "time": "",
-   "jv": "11:00",
    "meet": "Marcus Whitman 5th Annual \"Rally @ The Valley\"",
-   "loc": "Valley Elementary School"
+   "loc": "Valley Elementary School",
+   "races": [
+    {
+     "name": "JV",
+     "time": "11:00"
+    }
+   ]
   },
   {
    "date": "2026-10-13",
-   "time": "17:45",
-   "jv": "17:45",
    "meet": "League Meet #4",
-   "loc": "Webster Park"
+   "loc": "Webster Park",
+   "races": [
+    {
+     "name": "JV",
+     "time": "17:45"
+    },
+    {
+     "name": "Varsity",
+     "time": "17:45"
+    }
+   ]
   },
   {
    "date": "2026-10-17",
-   "time": "15:40",
-   "jv": "12:00",
    "meet": "Burnt Hills Invitational",
-   "loc": "Saratoga Spa State Park"
+   "loc": "Saratoga Spa State Park",
+   "races": [
+    {
+     "name": "JV",
+     "time": "12:00"
+    },
+    {
+     "name": "Varsity",
+     "time": "15:40"
+    }
+   ]
   },
   {
    "date": "2026-10-24",
-   "time": "14:40",
-   "jv": "14:00",
    "meet": "Royal Cadet Invitational",
-   "loc": "Parma Park"
+   "loc": "Parma Park",
+   "races": [
+    {
+     "name": "JV",
+     "time": "14:00"
+    },
+    {
+     "name": "Varsity",
+     "time": "14:40"
+    }
+   ]
   },
   {
    "date": "2026-10-31",
-   "time": "15:50",
-   "jv": "17:00",
    "meet": "Monroe County Championship",
-   "loc": "Parma Park"
+   "loc": "Parma Park",
+   "races": [
+    {
+     "name": "JV",
+     "time": "17:00"
+    },
+    {
+     "name": "Varsity B",
+     "time": "14:40"
+    },
+    {
+     "name": "Varsity",
+     "time": "15:50"
+    }
+   ]
   },
   {
    "date": "2026-11-07",
-   "time": "12:00",
-   "jv": "",
    "meet": "Section V Championship",
-   "loc": "Letchworth State Park"
+   "loc": "Letchworth State Park",
+   "races": [
+    {
+     "name": "Varsity",
+     "time": "12:00"
+    }
+   ]
   },
   {
    "date": "2026-10-06",
-   "time": "17:45",
-   "jv": "17:45",
    "meet": "League Meet #3",
-   "loc": "Center Park"
+   "loc": "Center Park",
+   "races": [
+    {
+     "name": "JV",
+     "time": "17:45"
+    },
+    {
+     "name": "Varsity",
+     "time": "17:45"
+    }
+   ]
   },
   {
    "date": "2026-11-21",
-   "time": "09:00",
-   "jv": "09:00",
    "meet": "2026 Nike Cross Regionals (NXR) Northeast",
-   "loc": "Bowdoin Park"
+   "loc": "Bowdoin Park",
+   "races": [
+    {
+     "name": "JV",
+     "time": "09:00"
+    },
+    {
+     "name": "Varsity",
+     "time": "09:00"
+    }
+   ]
   }
  ],
  "results": [
