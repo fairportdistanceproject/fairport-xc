@@ -190,6 +190,31 @@
  ],
  "results": [
   {
+   "meet": "Monroe County Championship",
+   "d": "Oct 31 • Upcoming",
+   "t": "",
+   "races": [
+    {
+     "name": "Varsity Boys",
+     "res": "",
+     "dist": "5K",
+     "rows": []
+    },
+    {
+     "name": "Varsity B Boys",
+     "res": "",
+     "dist": "5K",
+     "rows": []
+    },
+    {
+     "name": "JV Boys",
+     "res": "",
+     "dist": "5K",
+     "rows": []
+    }
+   ]
+  },
+  {
    "meet": "Royal Cadet Invitational",
    "d": "Oct 24",
    "t": "H. Ruder 10:25.4",
