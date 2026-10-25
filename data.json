@@ -1985,5 +1985,12 @@
   }
  },
  "updated": "2026-10-24",
+ "announce": {
+  "on": false,
+  "text": "test",
+  "link": "",
+  "label": "",
+  "until": ""
+ },
  "logo": "logo.jpg?v=1792288046582"
 }
