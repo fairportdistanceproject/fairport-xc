@@ -198,7 +198,50 @@
      "name": "Varsity",
      "res": "",
      "dist": "5K",
-     "rows": []
+     "rows": [
+      [
+       "10",
+       "Patrick Rinefierd",
+       "12",
+       "16:09.7"
+      ],
+      [
+       "14",
+       "Jacob Pacer",
+       "12",
+       "16:19.3"
+      ],
+      [
+       "55",
+       "Eli Frank",
+       "9",
+       "17:14.7"
+      ],
+      [
+       "59",
+       "Jake VanDeVoorde",
+       "12",
+       "17:16.3"
+      ],
+      [
+       "87",
+       "Charlie Faber",
+       "10",
+       "17:43.8"
+      ],
+      [
+       "102",
+       "Vincent Teresi",
+       "11",
+       "18:07.8"
+      ],
+      [
+       "111",
+       "Brandon Green",
+       "11",
+       "18:30.0"
+      ]
+     ]
     },
     {
      "name": "JV & Varsity B",
