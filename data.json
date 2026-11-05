@@ -2129,13 +2129,18 @@
    "since": 2005
   }
  },
- "updated": "2026-11-01",
+ "updated": "2026-11-05",
  "announce": {
   "on": false,
   "text": "",
   "link": "",
   "label": "",
   "until": ""
+ },
+ "soon": {
+  "on": true,
+  "badge": "Coming this winter",
+  "msg": "Indoor Track is on the way. Meet schedules, event results, relays and records for the winter season will be posted here. Follow us on Instagram for updates."
  },
  "logo": "logo.jpg?v=1792288046582"
 }
