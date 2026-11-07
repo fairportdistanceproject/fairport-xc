@@ -194,6 +194,19 @@
  ],
  "results": [
   {
+   "meet": "Section V Championship",
+   "d": "Oct 7 • Upcoming",
+   "t": "",
+   "races": [
+    {
+     "name": "Varsity",
+     "res": "",
+     "dist": "5K",
+     "rows": []
+    }
+   ]
+  },
+  {
    "meet": "Monroe County Championship",
    "d": "Oct 31",
    "t": "P. Rinefierd 16:09.7",
@@ -2132,9 +2145,9 @@
  "updated": "2026-11-05",
  "announce": {
   "on": true,
-  "text": "2026 Section V Championship is on 11/7/26 at 12pm",
-  "link": "https://s3.amazonaws.com/sidearm.sites/sectionv.org/documents/2025/10/30/XC_Letchworth_Map_2025.pdf",
-  "label": "Course Map",
+  "text": "With the Sectional Championship approaching this weekend, you can click the link for more information for the meet, awards & general information.",
+  "link": "https://docs.google.com/document/d/e/2PACX-1vT0zJO0ofQLa4I9WP0m6MFVBDj1ufFk5yqVnd7IFVwquAspk-NNipC8zL3KxLiWpQ/pub#id.xtjfin7t3pk8",
+  "label": "Information Link",
   "until": ""
  },
  "soon": {
