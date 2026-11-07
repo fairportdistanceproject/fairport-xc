@@ -78,6 +78,7 @@ footer .tl a{color:inherit;text-decoration:underline;text-underline-offset:2px}f
 .seasonbar .wrap{display:flex;gap:6px;justify-content:center;padding-top:8px;padding-bottom:8px}
 .seasonbar button{border:1px solid var(--line);background:none;color:var(--text);font:inherit;font-size:.84rem;padding:6px 16px;border-radius:99px;cursor:pointer}
 .seasonbar button:hover{border-color:var(--red)}.seasonbar button.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
+.seasonbar .tg.done{background:#1f7a4d;border:1px solid rgba(255,255,255,.4)}
 .seasonbar .tg{font-size:.6rem;background:var(--blue);color:#fff;border-radius:99px;padding:1px 7px;margin-left:6px;text-transform:uppercase;letter-spacing:.06em;vertical-align:middle}
 .soonhero{background:var(--hero);padding:64px 0 72px;text-align:center;background-image:repeating-linear-gradient(115deg,transparent 0 38px,rgba(200,16,46,.22) 38px 40px);border-bottom:3px solid var(--red);color:var(--hero-t)}
 .soonbadge{display:inline-block;background:var(--red);color:#fff;font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:.8rem;padding:6px 16px;border-radius:99px;margin:4px 0 18px}
@@ -143,7 +144,7 @@ footer span{opacity:.7}
 <nav><div class="wrap"><div class="brand"><span id="logo"><span class="mark">FDP</span></span><span>Fairport Distance Project</span></div>
 <div class="l"><a href="#schedule">Schedule</a><a href="#results">Results</a><a href="#team">Team</a><a href="#history">History</a></div></div></nav>
 
-<div class="seasonbar" id="seasonbar"><div class="wrap"><button id="xcLink" class="on">Cross Country</button><button id="soonLink">Indoor Track <span class="tg">Soon</span></button></div></div>
+<div class="seasonbar" id="seasonbar"><div class="wrap"><button id="xcLink" class="on">Cross Country <span class="tg done" id="xcDone">✓ Complete</span></button><button id="soonLink">Indoor Track <span class="tg">Soon</span></button></div></div>
 <div class="ann" id="ann" style="display:none"></div>
 <header class="hero" id="herov"><div class="wrap">
 <div class="eyebrow">2026 Season · Fairport Distance Project</div>
@@ -205,6 +206,7 @@ footer span{opacity:.7}
 <h3>Indoor Track coming-soon page</h3>
 <div class="note" style="margin:0 0 8px">Visitors see an "Indoor Track" button under the top menu. It opens a coming-soon page with this message. Turn it off if you would rather not show it yet.</div>
 <label class="chk" style="margin-top:0"><input type="checkbox" id="soOn"> Show the Indoor Track button</label>
+<label class="chk"><input type="checkbox" id="soDone"> Show a green “Complete” sign on the Cross Country tab</label>
 <div class="form" style="margin-top:10px"><div><label>Badge</label><input id="soBadge" placeholder="Coming this winter"></div></div>
 <div style="margin-top:10px"><label style="font-size:.75rem;color:var(--muted);display:block">Message</label><textarea id="soMsg" rows="3"></textarea></div>
 <div style="margin-top:10px"><button class="btn s" id="soSave">Save coming-soon page</button></div>
@@ -294,7 +296,7 @@ var S={schedule:[
 results:[
 {meet:"Fairport Invitational",d:"Oct 10 · Team: 1st of 14",b:"1st · 38 pts",j:"2nd · 49 pts",t:"A. Rivera · 16:42",vd:"5K",jd:"5K",vi:SV,ji:SJ},
 {meet:"Monroe County Meet",d:"Oct 3 · Team: 3rd of 20",b:"3rd · 97 pts",j:"4th · 112 pts",t:"D. Park · 16:58",vd:"5K",jd:"5K",vi:SV,ji:SJ},
-{meet:"Dual Meet vs. Webster",d:"Sep 26 · Home",b:"W 21–36",j:"W 24–33",t:"J. Okafor · 17:11",vd:"5K",jd:"5K",vi:SV,ji:SJ}],team:[{"name": "Alex Rivera", "grade": "Senior", "pr": "16:42"}, {"name": "Jordan Okafor", "grade": "Sophomore", "pr": "17:11"}, {"name": "Sam Brooks", "grade": "Senior", "pr": "17:38"}, {"name": "Tyler Lane", "grade": "Junior", "pr": "17:54"}],history:{"section": [2003, 2006, 2017, 2019, 2020, 2022, 2023, 2024], "county": [2003, 2006, 2016, 2017, 2020, 2021, 2022, 2023, 2024], "quote": "100% of me is nothing compared to 1% of the whole team", "by": "Eliud Kipchoge, first runner to break 2 hours in the marathon", "record": {"wins": 307, "losses": 64, "since": 2005}},updated:"2026-10-18",announce:{on:false,text:"",link:"",label:"",until:""},soon:{on:true,badge:"Coming this winter",msg:"Indoor Track is on the way. Meet schedules, event results, relays and records for the winter season will be posted here. Follow us on Instagram for updates."},logo:null};
+{meet:"Dual Meet vs. Webster",d:"Sep 26 · Home",b:"W 21–36",j:"W 24–33",t:"J. Okafor · 17:11",vd:"5K",jd:"5K",vi:SV,ji:SJ}],team:[{"name": "Alex Rivera", "grade": "Senior", "pr": "16:42"}, {"name": "Jordan Okafor", "grade": "Sophomore", "pr": "17:11"}, {"name": "Sam Brooks", "grade": "Senior", "pr": "17:38"}, {"name": "Tyler Lane", "grade": "Junior", "pr": "17:54"}],history:{"section": [2003, 2006, 2017, 2019, 2020, 2022, 2023, 2024], "county": [2003, 2006, 2016, 2017, 2020, 2021, 2022, 2023, 2024], "quote": "100% of me is nothing compared to 1% of the whole team", "by": "Eliud Kipchoge, first runner to break 2 hours in the marathon", "record": {"wins": 307, "losses": 64, "since": 2005}},updated:"2026-10-18",announce:{on:false,text:"",link:"",label:"",until:""},soon:{on:true,xcDone:true,badge:"Coming this winter",msg:"Indoor Track is on the way. Meet schedules, event results, relays and records for the winter season will be posted here. Follow us on Instagram for updates."},logo:null};
 var filter="all",canEdit=false,db=null;
 function esc(s){var e=document.createElement("div");e.textContent=s==null?"":String(s);return e.innerHTML}
 function fmt(s){return new Date(s+"T12:00:00").toLocaleDateString("en-US",{month:"short",day:"numeric"})}
@@ -335,7 +337,7 @@ document.getElementById("teambox").addEventListener("keydown",function(e){if(e.k
 document.getElementById("athBody").addEventListener("click",function(e){var a=e.target.closest?e.target.closest(".athm"):null;if(!a)return;e.preventDefault();window.__fromAth=curAth;document.getElementById("backBtn").textContent="‹ Back to "+(((S.team||[])[curAth]||{}).name||"athlete");showRace(+a.dataset.ri,a.dataset.ci)});
 document.getElementById("athBack").onclick=function(){hideRace();var el=document.getElementById("team");if(el)el.scrollIntoView()};
 function setSeasonBar(soon){document.getElementById("xcLink").classList.toggle("on",!soon);document.getElementById("soonLink").classList.toggle("on",!!soon)}
-function drawSoon(){var o=S.soon||{},bar=document.getElementById("seasonbar");bar.style.display=o.on?"":"none";
+function drawSoon(){var o=S.soon||{},bar=document.getElementById("seasonbar");bar.style.display=o.on?"":"none";document.getElementById("xcDone").style.display=o.xcDone===false?"none":"";
 document.getElementById("soonBadge").textContent=o.badge||"Coming soon";document.getElementById("soonMsg").textContent=o.msg||"";
 if(!o.on&&document.getElementById("soonpage").style.display==="block")hideRace()}
 function showSoon(){document.getElementById("herov").style.display="none";document.getElementById("mainv").style.display="none";document.getElementById("racepage").style.display="none";document.getElementById("athpage").style.display="none";document.getElementById("soonpage").style.display="block";setSeasonBar(true);window.scrollTo(0,0)}
@@ -507,8 +509,8 @@ if(l&&!/^https?:\/\//i.test(l)){say("The link should start with https://");retur
 S.announce={on:on,text:t,link:l,label:document.getElementById("anLbl").value.trim(),until:document.getElementById("anUntil").value};
 try{sessionStorage.removeItem("ann_x")}catch(e){}render();save()};
 document.getElementById("anClear").onclick=function(){S.announce={on:false,text:"",link:"",label:"",until:""};fillAnn();render();save()};
-function fillSoon(){var o=S.soon||{};document.getElementById("soOn").checked=!!o.on;document.getElementById("soBadge").value=o.badge||"";document.getElementById("soMsg").value=o.msg||""}
-document.getElementById("soSave").onclick=function(){S.soon={on:document.getElementById("soOn").checked,badge:document.getElementById("soBadge").value.trim(),msg:document.getElementById("soMsg").value.trim()};render();save()};
+function fillSoon(){var o=S.soon||{};document.getElementById("soOn").checked=!!o.on;document.getElementById("soDone").checked=o.xcDone!==false;document.getElementById("soBadge").value=o.badge||"";document.getElementById("soMsg").value=o.msg||""}
+document.getElementById("soSave").onclick=function(){S.soon={on:document.getElementById("soOn").checked,xcDone:document.getElementById("soDone").checked,badge:document.getElementById("soBadge").value.trim(),msg:document.getElementById("soMsg").value.trim()};render();save()};
 function fillUpd(){document.getElementById("ud").value=S.updated||""}
 document.getElementById("saveUpd").onclick=function(){S.updated=document.getElementById("ud").value;render();save()};
 document.getElementById("todayUpd").onclick=function(){var d=new Date();S.updated=d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2);fillUpd();render();save()};
