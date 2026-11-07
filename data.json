@@ -196,56 +196,13 @@
   {
    "meet": "Section V Championship",
    "d": "Oct 7 • Upcoming",
-   "t": "",
+   "t": "J. Pacer 16:08.9",
    "races": [
     {
-     "name": "Varsity",
-     "res": "11/7/26 • Upcoming",
+     "name": "Varsity Class A",
+     "res": "3rd • 107 pts",
      "dist": "5K",
-     "rows": [
-      [
-       "11",
-       "Jacob Pacer",
-       "12",
-       "16:08.9"
-      ],
-      [
-       "12",
-       "Patrick Rinefierd",
-       "12",
-       "16:14.3"
-      ],
-      [
-       "19",
-       "Tobin Ruder",
-       "11",
-       "16:27.0"
-      ],
-      [
-       "29",
-       "Jake VanDeVoorde",
-       "12",
-       "16:47.0"
-      ],
-      [
-       "36",
-       "Hayden Ruder",
-       "9",
-       "17:02.1"
-      ],
-      [
-       "45",
-       "Eli Frank",
-       "9",
-       "17:23.1"
-      ],
-      [
-       "47",
-       "Charlie Faber",
-       "10",
-       "17:26.9"
-      ]
-     ]
+     "rows": []
     }
    ]
   },
