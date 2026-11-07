@@ -2144,10 +2144,10 @@
  },
  "updated": "2026-11-05",
  "announce": {
-  "on": true,
-  "text": "With the Sectional Championship approaching this weekend, you can click the link for more information for the meet, awards & general information.",
-  "link": "https://docs.google.com/document/d/e/2PACX-1vT0zJO0ofQLa4I9WP0m6MFVBDj1ufFk5yqVnd7IFVwquAspk-NNipC8zL3KxLiWpQ/pub#id.xtjfin7t3pk8",
-  "label": "Information Link",
+  "on": false,
+  "text": "",
+  "link": "",
+  "label": "",
   "until": ""
  },
  "soon": {
