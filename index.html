@@ -75,8 +75,8 @@ footer .tl a{color:inherit;text-decoration:underline;text-underline-offset:2px}f
 .athm{color:var(--text);font-weight:600;text-decoration:underline;text-decoration-color:rgba(255,255,255,.3);text-underline-offset:3px}.athm:hover{color:var(--accent)}
 .athd{color:var(--muted);font-size:.78rem}
 .seasonbar{background:var(--surface);border-bottom:1px solid var(--line)}
-.seasonbar .wrap{display:flex;gap:6px;justify-content:center;padding-top:8px;padding-bottom:8px}
-.seasonbar button{border:1px solid var(--line);background:none;color:var(--text);font:inherit;font-size:.84rem;padding:6px 16px;border-radius:99px;cursor:pointer}
+.seasonbar .wrap{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;padding-top:8px;padding-bottom:8px}
+.seasonbar button{white-space:nowrap;border:1px solid var(--line);background:none;color:var(--text);font:inherit;font-size:.84rem;padding:6px 16px;border-radius:99px;cursor:pointer}
 .seasonbar button:hover{border-color:var(--red)}.seasonbar button.on{background:var(--red);border-color:var(--red);color:#fff;font-weight:600}
 .seasonbar .tg.done{background:#1f7a4d;border:1px solid rgba(255,255,255,.4)}
 .seasonbar .tg{font-size:.6rem;background:var(--blue);color:#fff;border-radius:99px;padding:1px 7px;margin-left:6px;text-transform:uppercase;letter-spacing:.06em;vertical-align:middle}
@@ -137,14 +137,15 @@ input,select{width:100%;padding:9px 10px;border:1px solid var(--line);border-rad
 footer{margin-top:64px;background:var(--hero);color:var(--hero-t);padding:30px 0;font-size:.88rem;border-top:4px solid var(--red)}
 footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px}
 footer span{opacity:.7}
-@media(max-width:640px){.rc strong{font-size:1.35rem}nav div.l{gap:10px;font-size:.8rem}.brand>span:last-child{display:none}}
+@media(max-width:640px){.rc strong{font-size:1.35rem}nav div.l{gap:10px;font-size:.8rem}.brand>span:last-child{display:none}.seasonbar .wrap{padding-left:10px;padding-right:10px}.seasonbar button{padding:6px 11px;font-size:.8rem}.seasonbar .tg{font-size:.56rem;padding:1px 6px;margin-left:5px}}
+@media(max-width:360px){.seasonbar .tg.done .w{display:none}.seasonbar button{padding:6px 10px}}
 </style>
 </head>
 <body>
 <nav><div class="wrap"><div class="brand"><span id="logo"><span class="mark">FDP</span></span><span>Fairport Distance Project</span></div>
 <div class="l"><a href="#schedule">Schedule</a><a href="#results">Results</a><a href="#team">Team</a><a href="#history">History</a></div></div></nav>
 
-<div class="seasonbar" id="seasonbar"><div class="wrap"><button id="xcLink" class="on">Cross Country <span class="tg done" id="xcDone">✓ Complete</span></button><button id="soonLink">Indoor Track <span class="tg">Soon</span></button></div></div>
+<div class="seasonbar" id="seasonbar"><div class="wrap"><button id="xcLink" class="on">Cross Country <span class="tg done" id="xcDone">✓<span class="w"> Complete</span></span></button><button id="soonLink">Indoor Track <span class="tg">Soon</span></button></div></div>
 <div class="ann" id="ann" style="display:none"></div>
 <header class="hero" id="herov"><div class="wrap">
 <div class="eyebrow">2026 Season · Fairport Distance Project</div>
