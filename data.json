@@ -202,7 +202,92 @@
      "name": "Varsity",
      "res": "",
      "dist": "5K",
-     "rows": [],
+     "rows": [
+      [
+       "15",
+       "Tobin Ruder",
+       "11",
+       "17:17.6"
+      ],
+      [
+       "24",
+       "Jacob Pacer",
+       "12",
+       "17:35.7"
+      ],
+      [
+       "70",
+       "Jake VanDeVoorde",
+       "12",
+       "18:21.8"
+      ],
+      [
+       "78",
+       "Hayden Ruder",
+       "9",
+       "18:29.2"
+      ],
+      [
+       "112",
+       "Charlie Faber",
+       "10",
+       "18:57.9"
+      ],
+      [
+       "176",
+       "Anthony Bracco",
+       "11",
+       "19:50.5"
+      ],
+      [
+       "180",
+       "Andrew Osinski",
+       "11",
+       "19:55.8"
+      ],
+      [
+       "181",
+       "Jackson Lapointe",
+       "10",
+       "19:57.0"
+      ],
+      [
+       "191",
+       "Ethan Osinski",
+       "11",
+       "20:11.9"
+      ],
+      [
+       "210",
+       "Ethan Burns",
+       "12",
+       "20:54.5"
+      ],
+      [
+       "215",
+       "Gabe Gerlach",
+       "10",
+       "21:01.4"
+      ],
+      [
+       "227",
+       "Joseph Marafioti",
+       "12",
+       "21:24.3"
+      ],
+      [
+       "246",
+       "Shubhang Vaisravanath",
+       "10",
+       "22:37.4"
+      ],
+      [
+       "264",
+       "Jacob Parmele",
+       "12",
+       "25:46.3"
+      ]
+     ],
      "link": "https://results.leonetiming.com/xc.html?mid=9304&en=1-1",
      "course": "15:09.6"
     }
