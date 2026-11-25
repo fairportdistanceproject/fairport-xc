@@ -2313,8 +2313,8 @@
  },
  "updated": "2026-11-08",
  "announce": {
-  "on": true,
-  "text": "The 2026 Fairport Cross Country season officially comes to a close. We look forward to seeing everyone in Indoor Track!",
+  "on": false,
+  "text": "",
   "link": "",
   "label": "",
   "until": ""
